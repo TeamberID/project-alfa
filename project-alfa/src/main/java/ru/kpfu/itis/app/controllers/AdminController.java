@@ -25,7 +25,7 @@ public class AdminController {
 
     @GetMapping("/registration-key-requests")
     public String getRegistrationKeyRequestsPage(@ModelAttribute("model")ModelMap model) {
-        model.addAttribute(registrationKeyRequestService.getUnderConsiderationRequests());
+        model.addAttribute("requests", registrationKeyRequestService.getUnderConsiderationRequests());
         return "admin/registration-key-requests";
     }
 }

@@ -35,6 +35,8 @@ public class RegistrationKeyRequest {
     private String university;
     private String institute;
     private String course;
+
+    @Column(name = "\"group\"")
     private String group;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
