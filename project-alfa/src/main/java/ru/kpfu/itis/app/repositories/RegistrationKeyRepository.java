@@ -8,4 +8,5 @@ import ru.kpfu.itis.app.model.RegistrationKey;
  * 11-601 ITIS KPFU
  */
 public interface RegistrationKeyRepository extends JpaRepository<RegistrationKey, Long>{
+    RegistrationKey findByValue(String value);
 }
