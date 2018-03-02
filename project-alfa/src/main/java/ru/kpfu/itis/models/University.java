@@ -18,11 +18,14 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "universities")
+@Table(name = "universitн")
 public class University {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "university")
     private List<Institute> institutes;
 }

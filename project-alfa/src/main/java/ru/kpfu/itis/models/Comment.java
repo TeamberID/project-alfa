@@ -18,13 +18,18 @@ import java.sql.Date;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "comments")
+@Table(name = "comment")
 public class Comment {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
+
    private Date date;
+
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "author_id")
    private User author;
+
    private String text;
 
 }

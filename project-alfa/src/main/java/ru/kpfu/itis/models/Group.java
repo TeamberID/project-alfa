@@ -18,13 +18,18 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "groups")
+@Table(name = "group")
 public class Group {
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Long id;
-   private List<User> members;
-   private User monitor;
-   private Institute institute;
-   private byte semesterNumber;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
+    private List<User> members;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "institute_id")
+    private Institute institute;
+
+    private byte semesterNumber;
 }

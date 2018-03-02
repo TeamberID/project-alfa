@@ -18,12 +18,18 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "sessions")
+@Table(name = "session")
 public class Session {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "session")
     private List<Exam> exams;
+
     private byte semesterNumber;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="institute_id")
     private Institute institute;
 }
