@@ -30,6 +30,7 @@ public class Teacher {
     @JoinColumn(name = "teacher_id")
     private List<Comment> comments;
 
-    //TODO
-    //private List<Subject> subjects;
+    /*@OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "")
+    private List<Subject> subjects;*/
 }
