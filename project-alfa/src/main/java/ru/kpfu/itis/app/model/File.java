@@ -1,4 +1,4 @@
-package ru.kpfu.itis.models;
+package ru.kpfu.itis.app.model;
 
 /**
  * Created by Robert Gareev

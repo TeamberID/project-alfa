@@ -1,9 +1,8 @@
-package ru.kpfu.itis.models;
+package ru.kpfu.itis.app.model;
 
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.util.List;
 
 /**
@@ -19,23 +18,18 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "exam_post")
-public class ExamPost {
+@Table(name = "\"group\"")
+public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date date;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
+    private List<User> members;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id")
-    private User author;
+    @JoinColumn(name = "institute_id")
+    private Institute institute;
 
-    private String text;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exam_id")
-    private Exam exam;
-
-    private List<File> attachments;
+    private byte semesterNumber;
 }

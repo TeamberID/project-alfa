@@ -1,7 +1,7 @@
-package ru.kpfu.itis.repositories;
+package ru.kpfu.itis.app.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.kpfu.itis.models.Teacher;
+import ru.kpfu.itis.app.model.Teacher;
 
 /**
  * Created by Robert Gareev

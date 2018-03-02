@@ -23,7 +23,8 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Autowired
     private RegistrationKeyRepository registrationKeyRepository;
 
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void register(UserRegistrationForm userForm) {

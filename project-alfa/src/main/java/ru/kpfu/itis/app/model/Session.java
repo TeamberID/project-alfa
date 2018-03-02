@@ -1,4 +1,4 @@
-package ru.kpfu.itis.models;
+package ru.kpfu.itis.app.model;
 
 import lombok.*;
 
@@ -18,17 +18,18 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "institute")
-public class Institute {
+@Table(name = "session")
+public class Session {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "session")
+    private List<Exam> exams;
+
+    private byte semesterNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="university_id")
-    private University university;
-
-    private List<Group> groups;
+    @JoinColumn(name="institute_id")
+    private Institute institute;
 }

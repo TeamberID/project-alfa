@@ -1,8 +1,7 @@
-package ru.kpfu.itis.models;
+package ru.kpfu.itis.app.model;
 
 import lombok.*;
 import javax.persistence.*;
-import java.util.Set;
 
 /**
  * Created by Robert Gareev
@@ -24,13 +23,13 @@ public class User {
     private Long id;
     private String name;
 
-    @Column(unique = true)
-    private String login;
+    /*@Column(unique = true)
+    private String login;*/
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private Group group;
 
-    private String hashPassword;
+//    private String hashPassword;
 
 }

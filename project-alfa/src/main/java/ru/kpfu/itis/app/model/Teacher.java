@@ -1,4 +1,4 @@
-package ru.kpfu.itis.models;
+package ru.kpfu.itis.app.model;
 
 import lombok.*;
 
@@ -31,5 +31,5 @@ public class Teacher {
     private List<Comment> comments;
 
     //TODO
-    private List<Subject> subjects;
+    //private List<Subject> subjects;
 }

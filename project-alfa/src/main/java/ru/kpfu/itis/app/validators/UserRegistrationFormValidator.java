@@ -24,8 +24,6 @@ public class UserRegistrationFormValidator implements Validator {
     @Autowired
     private RegistrationKeyRepository registrationKeyRepository;
 
-    private UserRegistrationForm form;
-
     @Override
     public boolean supports(Class<?> aClass) {
         return aClass.getName().equals(UserRegistrationForm.class.getName());
@@ -34,7 +32,7 @@ public class UserRegistrationFormValidator implements Validator {
     @Transactional
     @Override
     public void validate(Object target, Errors errors) {
-        form = (UserRegistrationForm)target;
+        UserRegistrationForm form = (UserRegistrationForm) target;
 
         Optional<UserData> existedUser = usersRepository.findOneByLogin(form.getLogin());
 
@@ -63,9 +61,6 @@ public class UserRegistrationFormValidator implements Validator {
             }
 
         }
-
         return false;
     }
-
-
 }
