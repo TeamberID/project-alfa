@@ -2,6 +2,7 @@ package ru.kpfu.itis.app.model;
 
 import lombok.*;
 import ru.kpfu.itis.app.security.role.Role;
+import ru.kpfu.itis.app.security.status.UserStatus;
 
 import javax.persistence.*;
 
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @Entity
 @Table(name = "userdata")
-public class User {
+public class UserData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,6 +33,11 @@ public class User {
 
     private String course;
 
+    @Column(name = "\"group\"")
+    private String group;
+
+    @Enumerated(EnumType.STRING)
+    private UserStatus userStatus;
 
 
     @Enumerated(EnumType.STRING)

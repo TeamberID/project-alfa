@@ -8,11 +8,10 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import ru.kpfu.itis.app.forms.UserRegistrationForm;
 import ru.kpfu.itis.app.model.RegistrationKey;
-import ru.kpfu.itis.app.model.RegistrationKeyRequest;
 import ru.kpfu.itis.app.model.RegistrationKeyStatus;
-import ru.kpfu.itis.app.model.User;
+import ru.kpfu.itis.app.model.UserData;
 import ru.kpfu.itis.app.repositories.RegistrationKeyRepository;
-import ru.kpfu.itis.app.repositories.UsersRepository;
+import ru.kpfu.itis.app.repositories.UserDatasRepository;
 
 import java.util.Optional;
 
@@ -20,7 +19,7 @@ import java.util.Optional;
 public class UserRegistrationFormValidator implements Validator {
 
     @Autowired
-    private UsersRepository usersRepository;
+    private UserDatasRepository usersRepository;
 
     @Autowired
     private RegistrationKeyRepository registrationKeyRepository;
@@ -37,7 +36,7 @@ public class UserRegistrationFormValidator implements Validator {
     public void validate(Object target, Errors errors) {
         form = (UserRegistrationForm)target;
 
-        Optional<User> existedUser = usersRepository.findOneByLogin(form.getLogin());
+        Optional<UserData> existedUser = usersRepository.findOneByLogin(form.getLogin());
 
         if (existedUser.isPresent()) {
             errors.reject("bad.login", "Логин занят");
@@ -60,20 +59,12 @@ public class UserRegistrationFormValidator implements Validator {
 
             if(registrationKey.getStatus().equals(RegistrationKeyStatus.NOT_USED)){
                 registrationKey.setStatus(RegistrationKeyStatus.USED);
-                addInfo(registrationKey);
                 return true;
             }
 
         }
 
         return false;
-    }
-
-    private void addInfo(RegistrationKey registrationKey){
-        RegistrationKeyRequest registrationKeyRequest = registrationKey.getKeyRequest();
-        form.setUniversity(registrationKeyRequest.getUniversity());
-        form.setInstitute(registrationKeyRequest.getInstitute());
-        form.setCourse(registrationKeyRequest.getCourse());
     }
 
 

@@ -8,7 +8,7 @@
 <#if error??>
 <div class="alert alert-danger" role="alert">${error}</div>
 </#if>
-<form action="/signUp" method="post">
+<form action="/registration" method="post">
     <input name="login" placeholder="Логин">
     <input name="password" placeholder="Пароль">
     <input name="key" placeholder="key">

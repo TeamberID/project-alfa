@@ -19,7 +19,7 @@ import javax.validation.Valid;
 public class RegistrationController {
 
     @Autowired
-    private RegistrationService service;
+    private RegistrationService registrationService;
 
     @Autowired
     private UserRegistrationFormValidator userRegistrationFormValidator;
@@ -30,19 +30,19 @@ public class RegistrationController {
     }
 
 
-    @PostMapping(value = "/signUp")
+    @PostMapping(value = "/registration")
     public String signUp(@Valid @ModelAttribute("userForm") UserRegistrationForm userRegistrationForm,
                          BindingResult errors, RedirectAttributes attributes) {
         if (errors.hasErrors()) {
             attributes.addFlashAttribute("error", errors.getAllErrors().get(0).getDefaultMessage());
-            return "redirect:/signUp";
+            return "redirect:/registration";
         }
-        service.register(userRegistrationForm);
-        return "success_registration";
+        registrationService.register(userRegistrationForm);
+        return "success-registration";
     }
 
-    @GetMapping(value = "/signUp")
+    @GetMapping(value = "/registration")
     public String getSignUpPage() {
-        return "sign_up";
+        return "registration";
     }
 }
