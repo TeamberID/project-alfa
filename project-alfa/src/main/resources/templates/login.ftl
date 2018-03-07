@@ -13,6 +13,15 @@
     <form class="form-horizontal" action="/login" method="post">
         <input name="login" placeholder="Логин">
         <input name="password" placeholder="Пароль">
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="remember-me">Запомнить
+                    </label>
+                </div>
+            </div>
+        </div>
         <input type="submit">
     </form>
 </div>
