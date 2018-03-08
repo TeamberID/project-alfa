@@ -29,7 +29,4 @@ public class Institute {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="university_id")
     private University university;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
-    private List<Group> groups;
 }

@@ -1,6 +1,7 @@
 package ru.kpfu.itis.app.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.kpfu.itis.app.forms.RegistrationKeyRequestForm;
 import ru.kpfu.itis.app.services.RegistrationKeyRequestService;
+import ru.kpfu.itis.app.services.UniversityService;
 import ru.kpfu.itis.app.validators.RegistrationKeyRequestFormValidator;
 
 import javax.validation.Valid;
@@ -24,19 +26,22 @@ public class RegistrationKeyRequestController {
 
     private RegistrationKeyRequestFormValidator registrationKeyRequestFormValidator;
     private RegistrationKeyRequestService registrationKeyRequestService;
+    private UniversityService universityService;
 
-    public RegistrationKeyRequestController(RegistrationKeyRequestFormValidator registrationKeyRequestFormValidator, RegistrationKeyRequestService registrationKeyRequestService) {
+    public RegistrationKeyRequestController(RegistrationKeyRequestFormValidator registrationKeyRequestFormValidator, RegistrationKeyRequestService registrationKeyRequestService, UniversityService universityService) {
         this.registrationKeyRequestFormValidator = registrationKeyRequestFormValidator;
         this.registrationKeyRequestService = registrationKeyRequestService;
+        this.universityService = universityService;
     }
 
-    @InitBinder
+    @InitBinder("keyRequestForm")
     public void initKeyRequestValidator(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(registrationKeyRequestFormValidator);
     }
 
     @GetMapping("/registration-key-request")
-    public String getRegistrationKeyRequestPage() {
+    public String getRegistrationKeyRequestPage(@ModelAttribute("model")ModelMap modelMap) {
+        modelMap.addAttribute("universities", universityService.getAllUniversities());
         return "registration-key-request";
     }
 

@@ -14,22 +14,25 @@ import java.sql.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ToString
 @EqualsAndHashCode
+
 @Entity
+@Inheritance
+@DiscriminatorColumn(name = "type")
 @Table(name = "comment")
 public class Comment {
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Long id;
 
-   private Date date;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-   @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "author_id")
-   private User author;
+    private Date date;
 
-   private String text;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
+    private User author;
+
+    private String text;
 
 }

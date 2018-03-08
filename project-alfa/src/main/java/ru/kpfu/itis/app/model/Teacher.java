@@ -26,11 +26,6 @@ public class Teacher {
 
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "teacher_id")
-    private List<Comment> comments;
-
-    /*@OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "")
-    private List<Subject> subjects;*/
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
+    private List<TeacherComment> comments;
 }
