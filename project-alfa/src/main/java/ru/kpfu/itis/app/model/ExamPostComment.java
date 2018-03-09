@@ -12,6 +12,7 @@ import java.sql.Date;
 
 @Getter
 @Setter
+@NoArgsConstructor
 
 @Entity
 @DiscriminatorValue("exam-post")

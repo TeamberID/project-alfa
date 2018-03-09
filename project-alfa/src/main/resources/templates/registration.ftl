@@ -7,9 +7,9 @@
 <div class="alert alert-danger" role="alert">${error}</div>
 </#if>
 <form action="/registration" method="post">
-    <input name="login" placeholder="Логин">
-    <input name="password" placeholder="Пароль">
-    <input name="key" placeholder="key">
+    <input name="login" type="text" placeholder="Логин">
+    <input name="password" type="password" placeholder="Пароль">
+    <input name="key" type="text" placeholder="key">
     <input type="submit">
 </form>
 </body>

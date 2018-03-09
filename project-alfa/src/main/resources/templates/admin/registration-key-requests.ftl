@@ -18,8 +18,8 @@
                     <#--<img src="/file/${currentRequest.documentImage.fileInfo.id}" class="pull-left" height="auto" width="600"/>-->
                 </div>
                 <div class="col-md-4">
-                    <p>University: ${currentRequest.university}</p>
-                    <p>Institute: ${currentRequest.institute}</p>
+                    <p>University: ${currentRequest.university.name}</p>
+                    <p>Institute: ${currentRequest.institute.name}</p>
                     <p>Course: ${currentRequest.course}</p>
                     <p>Group: ${currentRequest.group}</p>
                 </div>
