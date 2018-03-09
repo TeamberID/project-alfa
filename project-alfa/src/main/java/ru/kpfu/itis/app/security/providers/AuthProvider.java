@@ -36,7 +36,8 @@ public class AuthProvider implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
 
         Optional<UserData> userOptional = userDatasRepository.findOneByLogin(username);
-
+		
+		//check
         if (userOptional.isPresent()) {
 
             UserData user = userOptional.get();
