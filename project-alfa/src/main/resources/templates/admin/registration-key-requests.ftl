@@ -14,8 +14,7 @@
             <div class="row">
                 <div class="col-md-3">
                     <h3>${currentRequest.surname} ${currentRequest.name}</h3>
-                    <h4>There will be a photo</h4>
-                    <#--<img src="/file/${currentRequest.documentImage.fileInfo.id}" class="pull-left" height="auto" width="600"/>-->
+                    <img src="/file/${currentRequest.documentImage.fileInfo.id}" class="pull-left" height="auto" width="300"/>
                 </div>
                 <div class="col-md-4">
                     <p>University: ${currentRequest.university.name}</p>
@@ -77,7 +76,7 @@
                         '<div class="row">' +
                             '<div class="col-md-3">' +
                                 '<h3>' + currentRequest.surname + ' ' + currentRequest.name + '</h3>' +
-                                '<h4>There will be a photo</h4>' +
+                                '<img src="/file/' + currentRequest.documentImage.fileInfo.id + '" class="pull-left" height="auto" width="300"/>' +
                             '</div>' +
                             '<div class="col-md-4">' +
                                 '<p>University: ' + currentRequest.university + '</p>' +
