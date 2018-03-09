@@ -1,8 +1,6 @@
 <#ftl encoding='UTF-8'>
 <head>
-    <head>
-        <link href="/css/bootstrap.min.css" rel="stylesheet"/>
-    </head>
+    <link href="/bootstrap/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <#if error??>
