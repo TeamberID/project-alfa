@@ -25,10 +25,17 @@
             <input class="form-group" name="countOfKey" placeholder="count of keys" type="number" required>
         </div>
         <div class="form-group">
-            <input class="form-group" name="university" placeholder="university" type="text" required>
+            <label for="university">University</label>
+            <select class="form-control" id="university" name="universityId" onchange="updateInstituteSelect(this.value)">
+                <option selected>Выберите университет</option>
+                <#list model.universities as university>
+                    <option id="${university?index}" value=${university.id}>${university.name}</option>
+                </#list>
+            </select>
         </div>
         <div class="form-group">
-            <input class="form-group" name="institute" placeholder="institute" type="text" required>
+            <label for="institute">Institute</label>
+            <select class="form-control" id="institute" name="instituteId"></select>
         </div>
         <div class="form-group">
             <input class="form-group" name="course" placeholder="course" type="text" required>
@@ -43,5 +50,41 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit" >Send Request</button>
         </div>
     </form>
+    <script>
+        /*document.getElementById("university").addEventListener("change", function (ev) {
+            updateInstituteSelect(this.value);
+        }, false);*/
+
+
+        function updateInstituteSelect(instituteId) {
+            console.log('updateInstituteSelect: ' + instituteId);
+            $.ajax({
+                url: '/api/university/' + instituteId + '/institutes',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    fillInstituteSelect(data);
+                },
+                error: function () {
+                    console.log('getInstitutesByUniversityId method failed')
+                }
+            })
+        }
+
+        function fillInstituteSelect(data) {
+            console.log(data);
+            var institutes = data;
+            var instituteSelect = document.getElementById("institute");
+            for (var i = 0; i < institutes.length; i++) {
+                var currentInstitute = institutes[i];
+                var option = document.createElement("option");
+                option.value = currentInstitute.id;
+                var instituteNameText = document.createTextNode(currentInstitute.name);
+                option.appendChild(instituteNameText);
+                instituteSelect.appendChild(option);
+            }
+        }
+    </script>
 </body>
 </html>

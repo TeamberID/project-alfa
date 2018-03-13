@@ -21,9 +21,9 @@ public class RegistrationKeyRequestForm {
     private String email;
     private Integer countOfKey;
 
-    private String university;
-    private String institute;
-    private String course;
+    private Long universityId;
+    private Long instituteId;
+    private byte course;
     private String group;
 
     private MultipartFile documentImageMultipartFile;

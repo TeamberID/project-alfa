@@ -3,13 +3,13 @@ package ru.kpfu.itis.app.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * Created by Robert Gareev
  * 11-601 ITIS KPFU
  * 01.03.2018
  */
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,19 +17,18 @@ import java.util.List;
 @Builder
 @ToString
 @EqualsAndHashCode
+
 @Entity
-@Table(name = "\"group\"")
-public class Group {
+public class ExamPostFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
-    private List<User> members;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "file_info_id")
+    private FileInfo fileInfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "institute_id")
-    private Institute institute;
-
-    private byte semesterNumber;
+    @JoinColumn(name = "exam_post_id")
+    private ExamPost examPost;
 }

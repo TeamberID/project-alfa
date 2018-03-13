@@ -6,15 +6,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.app.model.UserData;
-import ru.kpfu.itis.app.repositories.UserDatasRepository;
+import ru.kpfu.itis.app.repositories.UserDataRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserDatasRepository usersRepository;
+    private final UserDataRepository usersRepository;
 
     @Autowired
-    public UserDetailsServiceImpl(UserDatasRepository usersRepository) {
+    public UserDetailsServiceImpl(UserDataRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
 

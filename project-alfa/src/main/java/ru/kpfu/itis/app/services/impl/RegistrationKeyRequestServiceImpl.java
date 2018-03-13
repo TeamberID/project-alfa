@@ -3,8 +3,10 @@ package ru.kpfu.itis.app.services.impl;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.app.forms.RegistrationKeyRequestForm;
 import ru.kpfu.itis.app.model.*;
+import ru.kpfu.itis.app.repositories.InstitutesRepository;
 import ru.kpfu.itis.app.repositories.RegistrationKeyRepository;
 import ru.kpfu.itis.app.repositories.RegistrationKeyRequestRepository;
+import ru.kpfu.itis.app.repositories.UniversitiesRepository;
 import ru.kpfu.itis.app.services.RegistrationKeyRequestService;
 import ru.kpfu.itis.app.utils.EmailSender;
 import ru.kpfu.itis.app.utils.FileStorageUtil;
@@ -22,13 +24,17 @@ public class RegistrationKeyRequestServiceImpl implements RegistrationKeyRequest
 
     private RegistrationKeyRequestRepository keyRequestRepository;
     private RegistrationKeyRepository keyRepository;
+    private UniversitiesRepository universitiesRepository;
+    private InstitutesRepository institutesRepository;
     private RegistrationKeyGenerator keyGenerator;
     private EmailSender emailSender;
     private FileStorageUtil fileStorageUtil;
 
-    public RegistrationKeyRequestServiceImpl(RegistrationKeyRequestRepository keyRequestRepository, RegistrationKeyRepository registrationKeyRepository, RegistrationKeyGenerator keyGenerator, EmailSender emailSender, FileStorageUtil fileStorageUtil) {
+    public RegistrationKeyRequestServiceImpl(RegistrationKeyRequestRepository keyRequestRepository, RegistrationKeyRepository registrationKeyRepository, UniversitiesRepository universitiesRepository, InstitutesRepository institutesRepository, RegistrationKeyGenerator keyGenerator, EmailSender emailSender, FileStorageUtil fileStorageUtil) {
         this.keyRequestRepository = keyRequestRepository;
         this.keyRepository = registrationKeyRepository;
+        this.universitiesRepository = universitiesRepository;
+        this.institutesRepository = institutesRepository;
         this.keyGenerator = keyGenerator;
         this.emailSender = emailSender;
         this.fileStorageUtil = fileStorageUtil;
@@ -47,8 +53,8 @@ public class RegistrationKeyRequestServiceImpl implements RegistrationKeyRequest
                 .surname(requestForm.getSurname())
                 .email(requestForm.getEmail())
                 .countOfKey(requestForm.getCountOfKey())
-                .university(requestForm.getUniversity())
-                .institute(requestForm.getInstitute())
+                .university(universitiesRepository.findOne(requestForm.getUniversityId()))
+                .institute(institutesRepository.findOne(requestForm.getInstituteId()))
                 .course(requestForm.getCourse())
                 .group(requestForm.getGroup())
                 .status(RegistrationKeyRequestStatus.UNDER_CONSIDERATION)

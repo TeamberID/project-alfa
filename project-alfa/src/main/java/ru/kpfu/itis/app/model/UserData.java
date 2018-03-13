@@ -20,26 +20,18 @@ public class UserData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(unique = true)
     private String login;
 
     private String hashPassword;
 
-
-    private String university;
-
-    private String institute;
-
-    private String course;
-
-    @Column(name = "\"group\"")
-    private String group;
-
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
 
-
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

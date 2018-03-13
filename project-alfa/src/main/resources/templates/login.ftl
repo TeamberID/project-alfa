@@ -9,8 +9,8 @@
 <h2>Sign In</h2>
 <div class="content-block">
     <form class="form-horizontal" action="/login" method="post">
-        <input name="login" placeholder="Логин">
-        <input name="password" placeholder="Пароль">
+        <input name="login" type="text" placeholder="Логин">
+        <input name="password" type="password" placeholder="Пароль">
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">
                 <div class="checkbox">

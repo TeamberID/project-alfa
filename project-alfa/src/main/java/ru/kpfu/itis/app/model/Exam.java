@@ -36,8 +36,6 @@ public class Exam {
     @JoinColumn(name = "institute_id")
     private Institute institute;
 
-    private byte semesterNumber;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "exam")
     private List<ExamPost> posts;
 
