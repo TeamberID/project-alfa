@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.kpfu.itis.app.model.UserData;
-import ru.kpfu.itis.app.repositories.UserDatasRepository;
+import ru.kpfu.itis.app.repositories.UserDataRepository;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -22,7 +22,7 @@ import java.util.Optional;
 public class AuthProvider implements AuthenticationProvider {
 
     @Autowired
-    UserDatasRepository userDatasRepository;
+    UserDataRepository userDatasRepository;
 
     @Autowired
     private UserDetailsService userDetailsService;
