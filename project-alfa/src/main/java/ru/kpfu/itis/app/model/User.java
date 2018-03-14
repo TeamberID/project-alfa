@@ -33,4 +33,5 @@ public class User {
     private Institute institute;
 
     private byte course;
+
 }
