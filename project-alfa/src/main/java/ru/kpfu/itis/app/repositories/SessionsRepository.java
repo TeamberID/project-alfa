@@ -1,6 +1,7 @@
 package ru.kpfu.itis.app.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import ru.kpfu.itis.app.model.Institute;
 import ru.kpfu.itis.app.model.Session;
 
 /**
@@ -9,4 +10,5 @@ import ru.kpfu.itis.app.model.Session;
  * 01.03.2018
  */
 public interface SessionsRepository extends JpaRepository<Session,Long> {
+    public Session findOneBySemesterNumberAndInstitute(Byte semesterNumber, Institute institute);
 }
