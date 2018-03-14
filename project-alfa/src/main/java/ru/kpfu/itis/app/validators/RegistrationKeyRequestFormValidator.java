@@ -29,8 +29,8 @@ public class RegistrationKeyRequestFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "surname", "invalid.surname", "Check 'surname' field. Is it empty?");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "invalid.email", "Check 'email' field. Is it empty?");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "countOfKey", "invalid.countOfKey", "Check 'count of key' field. Is it empty?");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "university", "invalid.university", "Check 'university' field. Is it empty?");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "institute", "invalid.institute", "Check 'institute' field. Is it empty?");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "universityId", "invalid.universityId", "Check 'university' field. Is it empty?");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "instituteId", "invalid.instituteId", "Check 'institute' field. Is it empty?");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "course", "invalid.course", "Check 'course' field. Is it empty?");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "group", "invalid.group", "Check 'group' field. Is it empty?");
     }

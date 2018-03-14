@@ -11,7 +11,7 @@ import ru.kpfu.itis.app.model.RegistrationKey;
 import ru.kpfu.itis.app.model.RegistrationKeyStatus;
 import ru.kpfu.itis.app.model.UserData;
 import ru.kpfu.itis.app.repositories.RegistrationKeyRepository;
-import ru.kpfu.itis.app.repositories.UserDatasRepository;
+import ru.kpfu.itis.app.repositories.UserDataRepository;
 
 import java.util.Optional;
 
@@ -19,7 +19,7 @@ import java.util.Optional;
 public class UserRegistrationFormValidator implements Validator {
 
     @Autowired
-    private UserDatasRepository usersRepository;
+    private UserDataRepository usersRepository;
 
     @Autowired
     private RegistrationKeyRepository registrationKeyRepository;

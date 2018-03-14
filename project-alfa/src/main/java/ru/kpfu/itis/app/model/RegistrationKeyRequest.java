@@ -32,9 +32,15 @@ public class RegistrationKeyRequest {
     private String email;
     private Integer countOfKey;
 
-    private String university;
-    private String institute;
-    private String course;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "university_id")
+    private University university;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "institute_id")
+    private Institute institute;
+
+    private byte course;
 
     @Column(name = "\"group\"")
     private String group;

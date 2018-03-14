@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 /**
  * Created by Robert Gareev
@@ -36,7 +37,9 @@ public class ExamPost {
     @JoinColumn(name = "exam_id")
     private Exam exam;
 
-    /*@OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_doc_id")
-    private List<File> attachments;*/
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "examPost")
+    private List<ExamPostComment> comments;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "examPost")
+    private List<ExamPostFile> attachments;
 }
