@@ -27,7 +27,7 @@
         <div class="form-group">
             <label for="university">University</label>
             <select class="form-control" id="university" name="universityId" onchange="updateInstituteSelect(this.value)">
-                <option selected>Выберите университет</option>
+                <option value="-1" selected>Выберите университет</option>
                 <#list model.universities as university>
                     <option id="${university?index}" value=${university.id}>${university.name}</option>
                 </#list>
@@ -51,29 +51,29 @@
         </div>
     </form>
     <script>
-        /*document.getElementById("university").addEventListener("change", function (ev) {
-            updateInstituteSelect(this.value);
-        }, false);*/
-
 
         function updateInstituteSelect(instituteId) {
-            console.log('updateInstituteSelect: ' + instituteId);
-            $.ajax({
-                url: '/api/university/' + instituteId + '/institutes',
-                type: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    console.log(data);
-                    fillInstituteSelect(data);
-                },
-                error: function () {
-                    console.log('getInstitutesByUniversityId method failed')
-                }
-            })
+            clearInstituteSelect();
+            if (instituteId !== '-1') {
+                $.ajax({
+                    url: '/api/university/' + instituteId + '/institutes',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        fillInstituteSelect(data);
+                    },
+                    error: function () {
+                        console.log('getInstitutesByUniversityId method failed')
+                    }
+                })
+            }
+        }
+        
+        function clearInstituteSelect() {
+            $("#institute").html("");
         }
 
         function fillInstituteSelect(data) {
-            console.log(data);
             var institutes = data;
             var instituteSelect = document.getElementById("institute");
             for (var i = 0; i < institutes.length; i++) {
