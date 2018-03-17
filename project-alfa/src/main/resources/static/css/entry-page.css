@@ -1,0 +1,56 @@
+@media all and (min-width: 400px) {
+    .entry-form {
+        padding: 60px 0;
+    }
+
+    .entry-form form {
+        margin: 0 auto;
+        max-width: 390px;
+    }
+}
+
+a {
+    font-weight: normal;
+    font-family: "Courier New", Courier, monospace;
+    text-transform: uppercase;
+    color: #0f0f0f;
+}
+
+input:focus {
+    border: 1px solid black;
+}
+
+input {
+    font-weight: normal;
+    font-family: "Courier New", Courier, monospace;
+    width: 100%;
+}
+
+label {
+    font-weight: bold;
+    font-family: "Courier New", Courier, monospace;
+    text-transform: uppercase;
+}
+
+
+.nav-tabs {
+    font-family: "Courier New", Courier, monospace;
+    text-transform: uppercase;
+}
+
+.top-tab-padding {
+    padding-top: 10px;
+}
+
+.btn {
+    color: black;
+    width: 100%;
+    font-family: "Courier New", Courier, monospace;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.btn:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+

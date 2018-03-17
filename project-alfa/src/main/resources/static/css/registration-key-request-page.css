@@ -1,0 +1,59 @@
+@media all and (min-width: 600px) {
+    .key-form {
+        padding: 60px 0;
+    }
+
+    .key-form h3{
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-family: "Courier New", Courier, monospace;
+    }
+
+    .key-form form {
+        margin: 0 auto;
+        max-width: 600px;
+    }
+}
+
+hr {
+    display: block;
+    margin: 0.5em auto;
+    border: 1px inset;
+}
+
+a {
+    text-transform: uppercase;
+    color: #0f0f0f;
+    font-family: "Courier New", Courier, monospace;
+}
+
+.btn {
+    color: black;
+    width: 100%;
+    font-family: "Courier New", Courier, monospace;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.btn:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+input:focus {
+    border: 1px solid black;
+}
+
+input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.row {
+    font-weight: normal;
+    font-family: "Courier New", Courier, monospace;
+    text-transform: uppercase;
+}
+

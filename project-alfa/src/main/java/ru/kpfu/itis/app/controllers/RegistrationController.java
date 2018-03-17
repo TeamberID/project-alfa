@@ -2,6 +2,7 @@ package ru.kpfu.itis.app.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +35,7 @@ public class RegistrationController {
     public String signUp(@Valid @ModelAttribute("userForm") UserRegistrationForm userRegistrationForm,
                          BindingResult errors, RedirectAttributes attributes) {
         if (errors.hasErrors()) {
-            attributes.addFlashAttribute("error", errors.getAllErrors().get(0).getDefaultMessage());
+            attributes.addFlashAttribute("registrationError", errors.getAllErrors().get(0).getDefaultMessage());
             return "redirect:/registration";
         }
         registrationService.register(userRegistrationForm);
@@ -42,7 +43,7 @@ public class RegistrationController {
     }
 
     @GetMapping(value = "/registration")
-    public String getSignUpPage() {
-        return "registration";
+    public String getSignUpPage(@ModelAttribute("registrationModel")ModelMap model) {
+        return "entry-page";
     }
 }
