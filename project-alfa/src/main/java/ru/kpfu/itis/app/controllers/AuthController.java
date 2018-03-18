@@ -19,13 +19,13 @@ public class AuthController {
     private AuthenticationService service;
 
     @GetMapping("/login")
-    public String login(@ModelAttribute("model") ModelMap model, Authentication authentication,
+    public String login(@ModelAttribute("loginModel") ModelMap model, Authentication authentication,
                         @RequestParam Optional<String> error) {
         if (authentication != null) {
             return "redirect:/user/profile";
         }
-        model.addAttribute("error", error);
-        return "login";
+        model.addAttribute("loginError", error);
+        return "entry-page";
     }
 
     @GetMapping("/logout")
