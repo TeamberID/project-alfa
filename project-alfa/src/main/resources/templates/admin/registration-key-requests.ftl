@@ -19,7 +19,7 @@
             }
 
             $( document ).ready(function doConnect() {
-                websocket = new SockJS("p-alpha/website:80/echoHandler");
+                websocket = new SockJS("http://p-alpha/website/echoHandler");
 
                 websocket.onmessage = function(evt) {
                     writeMessage(evt.data);
