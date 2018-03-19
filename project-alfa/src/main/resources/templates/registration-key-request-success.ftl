@@ -15,9 +15,8 @@
         jQuery(function ($) {
 
             $( document ).ready(function doConnect() {
-                websocket = new SockJS("http://p-alpha.website/admin/echoHandler");
+                websocket = new SockJS("http://p-alpha.website/echoHandler");
             });
-
 
 
             $ ('#send')
