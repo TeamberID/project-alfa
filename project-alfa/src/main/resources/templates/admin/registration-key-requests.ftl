@@ -4,10 +4,40 @@
     <title>admin panel: registration key requests</title>
     <link href="/bootstrap/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <script src="/js/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script>
     <script src="/bootstrap/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
+    <script language="javascript" type="text/javascript">
+        jQuery(function ($) {
+
+            function writeMessage(message) {
+                $('#messageOutput').text(message);
+                if (typeof websocket != 'undefined') {
+                    websocket.close();
+                    websocket = undefined;
+                }
+            }
+
+            $( document ).ready(function doConnect() {
+                websocket = new SockJS("http://p-alpha.website/echoHandler");
+
+
+                websocket.onmessage = function(evt) {
+                    writeMessage(evt.data);
+                };
+
+            });
+
+        });
+    </script>
 </head>
 <body>
 <h2>Registration keys requests</h2>
+<br>
+
+<label style="color: red" id="messageOutput"></label>
+
+<br>
 <ul id="requests-list-group" class="list-group">
     <#list model.requests as currentRequest>
         <li class="list-group-item">
