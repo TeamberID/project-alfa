@@ -26,4 +26,9 @@ public class UniversityServiceImpl implements UniversityService {
         List<University> universities = universitiesRepository.findAll();
         return universities.subList(1, universities.size());
     }
+
+    @Override
+    public List<University> getAll() {
+        return universitiesRepository.findAll();
+    }
 }

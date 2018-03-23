@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface UniversityService {
     List<University> getAllUniversities();
+    List<University> getAll();
 }

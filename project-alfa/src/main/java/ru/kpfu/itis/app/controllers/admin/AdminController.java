@@ -1,4 +1,4 @@
-package ru.kpfu.itis.app.controllers;
+package ru.kpfu.itis.app.controllers.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,8 +25,6 @@ public class AdminController {
 
     private RegistrationKeyRequestService registrationKeyRequestService;
 
-    @Autowired
-    private UserDatasService userDatasService;
 
     @Autowired
     private InstituteService instituteService;
@@ -43,11 +41,7 @@ public class AdminController {
         model.addAttribute("requests", registrationKeyRequestService.getUnderConsiderationRequests());
         return "admin/registration-key-requests";
     }
-    @GetMapping("/users")
-    public String getUsers(@ModelAttribute("model")ModelMap model){
-        model.addAttribute("users",userDatasService.getAll());
-        return "admin/entities/users";
-    }
+
     @GetMapping("/institutes")
     public String getIntitutes(@ModelAttribute("model")ModelMap model){
         model.addAttribute("institutes", instituteService.getAll());
