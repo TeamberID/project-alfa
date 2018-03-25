@@ -71,6 +71,7 @@
         <div class="col-md-6">
             <img name="image" id="image" src="/images/request-success.gif" alt="Success Image" width="400" height="400">
         </div>
+
         <div class="col-md-6">
             <h3>Ваш запрос успешно отправлен на обработку!</h3>
             <p>После проверки заявки модератором на указанный Вами адрес будет отправлено письмо.</p>
