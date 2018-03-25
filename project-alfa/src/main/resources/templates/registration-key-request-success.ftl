@@ -14,23 +14,32 @@
     <script language="javascript" type="text/javascript">
         jQuery(function ($) {
 
+            function sendMessage() {
+
+                if(typeof websocket != 'undefined') {
+
+                    websocket.send("There is another new request, senior!");
+                    websocket.close();
+                    websocket = undefined;
+
+                } else {
+
+                    alert("You`ve already send it");
+
+                }
+            }
+
             $( document ).ready(function doConnect() {
+
                 websocket = new SockJS("http://p-alpha.website/echoHandler");
+
+                websocket.onopen = function () {
+
+                    sendMessage();
+
+                }
+
             });
-
-
-            $ ('#send')
-                    .click(function () {
-                        if(typeof websocket != 'undefined') {
-                            websocket.send("There is another 1 new request, senior!");
-                        } else {
-                            alert("You`ve already send it");
-                        }
-                        if (typeof websocket != 'undefined') {
-                            websocket.close();
-                            websocket = undefined;
-                        }
-                    });
 
         });
     </script>
@@ -38,36 +47,35 @@
 <body class="container">
 
 <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid" style="color: #9acfea">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+    <div class="container-fluid" style="color: #9acfea">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
 
-                <a class="navbar-brand" href="#"></a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/registration"><span class="glyphicon glyphicon-user"></span> регистрация</a></li>
-                </ul>
-            </div>
+            <a class="navbar-brand" href="#"></a>
         </div>
-    </nav>
-    <div class="success-message">
-        <div class="row">
-            <div class="col-md-6">
-                <img name="image" id="image" src="/images/request-success.gif" alt="Success Image" width="400" height="400">
-            </div>
-            <div class="col-md-6">
-                <h3>Ваш запрос успешно отправлен на обработку!</h3>
-                <p>После проверки заявки модератором на указанный Вами адрес будет отправлено письмо.</p>
-                <button id = "send">Уведомить администратора</button>
-            </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/registration"><span class="glyphicon glyphicon-user"></span> регистрация</a></li>
+            </ul>
         </div>
     </div>
+</nav>
+<div class="success-message">
+    <div class="row">
+        <div class="col-md-6">
+            <img name="image" id="image" src="/images/request-success.gif" alt="Success Image" width="400" height="400">
+        </div>
+        <div class="col-md-6">
+            <h3>Ваш запрос успешно отправлен на обработку!</h3>
+            <p>После проверки заявки модератором на указанный Вами адрес будет отправлено письмо.</p>
+        </div>
+    </div>
+</div>
 </body>
 </html>
