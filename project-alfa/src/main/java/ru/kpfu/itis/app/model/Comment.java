@@ -14,7 +14,6 @@ import java.sql.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @EqualsAndHashCode
 
 @Entity
@@ -33,6 +32,7 @@ public class Comment {
     @JoinColumn(name = "author_id")
     private User author;
 
+    @Column(length = 300)
     private String text;
 
 }
