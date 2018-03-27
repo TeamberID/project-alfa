@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kpfu.itis.app.model.Exam;
+import ru.kpfu.itis.app.services.ExamPostService;
 import ru.kpfu.itis.app.services.ExamService;
 import ru.kpfu.itis.app.services.SessionService;
 
@@ -24,10 +25,12 @@ public class SessionController {
 
     private SessionService sessionService;
     private ExamService examService;
+    private ExamPostService examPostService;
 
-    public SessionController(SessionService sessionService, ExamService examService) {
+    public SessionController(SessionService sessionService, ExamService examService, ExamPostService examPostService) {
         this.sessionService = sessionService;
         this.examService = examService;
+        this.examPostService = examPostService;
     }
 
     @GetMapping("")
@@ -41,5 +44,11 @@ public class SessionController {
     public String getExamPage(@ModelAttribute("model") ModelMap model, @PathVariable("id") Long examId) {
         model.addAttribute("exam", examService.getExamById(examId));
         return "exam-page";
+    }
+
+    @GetMapping("/exam-post/{id}")
+    public String getExamPostPage(@ModelAttribute("model") ModelMap model, @PathVariable("id") Long examPostId) {
+        model.addAttribute("post", examPostService.getExamPost(examPostId));
+        return "exam-post-page";
     }
 }

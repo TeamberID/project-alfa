@@ -16,4 +16,5 @@ public interface ExamPostService {
     List<ExamPost> getAllByExamId(Long examId);
     List<ExamPostDto> getAllDtoByExamId(Long examId);
 
+    ExamPost getExamPost(Long examPostId);
 }

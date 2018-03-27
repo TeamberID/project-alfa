@@ -56,11 +56,13 @@ public class ExamPostServiceImpl implements ExamPostService {
 
     private List<ExamPostFile> createExamPostAttachments(MultipartFile[] files, ExamPost examPost) {
         List<ExamPostFile> attachments = Lists.newArrayList();
-        for (MultipartFile file: files) {
-            FileInfo fileInfo = fileStorageUtil.getExamPostInfoByMultipart(file);
-            ExamPostFile examPostFile = ExamPostFile.builder().fileInfo(fileInfo).examPost(examPost).build();
-            attachments.add(examPostFile);
-            fileStorageUtil.saveExamPostFileToStorage(file, examPostFile);
+        if (files != null) {
+            for (MultipartFile file: files) {
+                FileInfo fileInfo = fileStorageUtil.getExamPostInfoByMultipart(file);
+                ExamPostFile examPostFile = ExamPostFile.builder().fileInfo(fileInfo).examPost(examPost).build();
+                attachments.add(examPostFile);
+                fileStorageUtil.saveExamPostFileToStorage(file, examPostFile);
+            }
         }
         return attachments;
     }
@@ -76,5 +78,10 @@ public class ExamPostServiceImpl implements ExamPostService {
         return getAllByExamId(examId).stream()
                 .map(ExamPostDto::createByExamPost)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ExamPost getExamPost(Long examPostId) {
+        return examPostRepository.findOne(examPostId);
     }
 }
