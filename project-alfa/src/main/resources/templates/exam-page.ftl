@@ -20,8 +20,8 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="/user/session/"><span class="glyphicon glyphicon-th-large"></span> к экзаменам</a></li>
+            <ul class="nav navbar-nav navbar-left">
+                <li><a href="/user/session/"><span class="glyphicon glyphicon-th-large"></span> назад к экзаменам</a></li>
             </ul>
         </div>
     </div>
@@ -45,6 +45,7 @@
     </div>
     <hr>
     <div id="exam-form-block" class="post-form">
+        <div id="exam-post-alert"></div>
         <form method="post" enctype="multipart/form-data" id="exam-post-form">
             <div class="form-group">
                 <textarea id="exam-post-text" name="text" class="form-control" placeholder="отзыв об экзамене" rows="6" required></textarea>
@@ -106,8 +107,36 @@
 </#if>
 
 <script>
+
     function addNewExamPost(examId) {
-        uploadExamPostByAjax(examId);
+        if (isExamPostTextareaValid()) {
+            uploadExamPostByAjax(examId);
+        } else {
+            createAlertMessage("ваш отзыв пуст.");
+        }
+
+    }
+
+    function isExamPostTextareaValid() {
+        return $("#exam-post-text").val().length > 0;
+    }
+
+    function clearAlertMessage() {
+        $("#exam-post-alert").html("");
+    }
+
+    function clearCommentForm() {
+        $("#exam-post-form")[0].reset();
+    }
+
+    function createAlertMessage(message) {
+        clearAlertMessage();
+        $("#exam-post-alert").append(
+            '<div class="alert alert-danger alert-dismissible">' +
+                '<a class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+                '<p><strong>кажется, у нас проблемы!</strong> ' + message + '</p>' +
+            '</div>'
+        );
     }
 
     function uploadExamPostByAjax(examId) {
@@ -125,12 +154,19 @@
             contentType: false,
             processData: false,
             success: function (data) {
-                writeResult(data);
+                successUpload(data);
             },
             error: function () {
+                createAlertMessage("сервер едва дышит. извините, попробуйте позже");
                 console.log('uploadExamPostByAjax method error')
             }
         })
+    }
+
+    function successUpload(data) {
+        clearAlertMessage();
+        clearCommentForm();
+        writeResult(data);
     }
 
     function writeResult(data) {
@@ -171,7 +207,7 @@
                         '</div>' +
                         '<div class="clearfix"></div>' +
                     '</div>' +
-                '</div>
+                '</div>'
             );
         }
     }

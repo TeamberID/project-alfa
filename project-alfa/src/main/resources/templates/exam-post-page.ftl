@@ -20,7 +20,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-left">
                 <#if model.post.exam??>
                     <li><a href="/user/session/exam/${model.post.exam.id}"><span class="glyphicon glyphicon-th-list"></span> к экзамену</a></li>
                 <#else>
@@ -80,12 +80,6 @@
             </div>
         </div>
         <div class="col-md-6">
-            <form id="post-comment-form" method="post">
-                <div class="form-group">
-                    <textarea id="post-comment-text" name="text" class="form-control" placeholder="оставьте комментарий" rows="4" required></textarea>
-                </div>
-                <button type="button" class="btn btn-default" onclick="addNewPostComment(${model.post.id})">добавить комментарий</button>
-            </form>
             <div id="post-comments" class="well well-sm pre-scrollable">
                 <#list model.post.comments as comment>
                     <div class="panel panel-default">
@@ -109,6 +103,13 @@
                     </div>
                 </#list>
             </div>
+            <div id="post-form-alert"></div>
+            <form id="post-comment-form">
+                <div class="form-group">
+                    <textarea id="post-comment-text" name="text" class="form-control" placeholder="оставьте комментарий" rows="4" required></textarea>
+                </div>
+                <button type="button" class="btn btn-default" onclick="addNewPostComment(${model.post.id})">добавить комментарий</button>
+            </form>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -119,7 +120,29 @@
 </#if>
 <script>
     function addNewPostComment(examPostId) {
-        uploadExamPostCommentByAjax(examPostId);
+        if (isCommentValid()) {
+            uploadExamPostCommentByAjax(examPostId);
+        } else {
+            createAlertMessage("ваш комментарий пуст");
+        }
+    }
+
+    function clearAlertMessage() {
+        $("#post-form-alert").html("");
+    }
+
+    function createAlertMessage(message) {
+        $("#post-form-alert").html("");
+        $("#post-form-alert").append(
+                '<div class="alert alert-danger alert-dismissible">' +
+                '<a class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+                '<p><strong>кажется, у нас проблемы!</strong> ' + message + '</p>' +
+                '</div>'
+        );
+    }
+
+    function isCommentValid() {
+        return $("#post-comment-text").val().length > 0;
     }
 
     function uploadExamPostCommentByAjax(examPostId) {
@@ -136,12 +159,23 @@
             contentType: false,
             processData: false,
             success: function (data) {
-                fillComments(data);
+                successUpload(data);
             },
             error: function () {
+                createAlertMessage("сервер едва дышит. извините, попробуйте позже");
                 console.log('uploadExamPostCommentByAjax method error')
             }
         })
+    }
+
+    function successUpload(data) {
+        clearAlertMessage();
+        clearCommentForm();
+        fillComments(data);
+    }
+
+    function clearCommentForm() {
+        $("#post-comment-form")[0].reset();
     }
 
     function fillComments(comments) {

@@ -30,6 +30,13 @@ textarea {
     width: 100%;
 }
 
+.alert {
+    font-weight: normal;
+    font-family: "Courier New", Courier, monospace;
+    text-transform: uppercase;
+    color: #0f0f0f;
+}
+
 a {
     font-weight: normal;
     font-family: "Courier New", Courier, monospace;

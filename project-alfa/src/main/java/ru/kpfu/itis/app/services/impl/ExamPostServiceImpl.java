@@ -59,9 +59,11 @@ public class ExamPostServiceImpl implements ExamPostService {
         if (files != null) {
             for (MultipartFile file: files) {
                 FileInfo fileInfo = fileStorageUtil.getExamPostInfoByMultipart(file);
-                ExamPostFile examPostFile = ExamPostFile.builder().fileInfo(fileInfo).examPost(examPost).build();
-                attachments.add(examPostFile);
-                fileStorageUtil.saveExamPostFileToStorage(file, examPostFile);
+                if (fileInfo.getSize() != 0) {
+                    ExamPostFile examPostFile = ExamPostFile.builder().fileInfo(fileInfo).examPost(examPost).build();
+                    attachments.add(examPostFile);
+                    fileStorageUtil.saveExamPostFileToStorage(file, examPostFile);
+                }
             }
         }
         return attachments;
