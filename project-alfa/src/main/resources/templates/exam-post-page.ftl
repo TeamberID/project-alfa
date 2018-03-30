@@ -21,12 +21,10 @@
             <ul class="nav navbar-nav">
             </ul>
             <ul class="nav navbar-nav navbar-left">
-                <#if model.post.exam??>
-                    <li><a href="/user/session/exam/${model.post.exam.id}"><span class="glyphicon glyphicon-th-list"></span> к экзамену</a></li>
-                <#else>
-                    <li><a href="/registration"><span class="glyphicon glyphicon-user"></span> регистрация</a></li>
-                    <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> вход</a></li>
-                </#if>
+                <li><a href="/user/session/exam/${model.post.exam.id}"><span class="glyphicon glyphicon-th-list"></span> к экзамену</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> выйти</a></li>
             </ul>
         </div>
     </div>

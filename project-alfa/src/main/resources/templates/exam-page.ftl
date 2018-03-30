@@ -23,6 +23,9 @@
             <ul class="nav navbar-nav navbar-left">
                 <li><a href="/user/session/"><span class="glyphicon glyphicon-th-large"></span> назад к экзаменам</a></li>
             </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> выйти</a></li>
+            </ul>
         </div>
     </div>
 </nav>
