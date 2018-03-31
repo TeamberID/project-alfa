@@ -16,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
 @EqualsAndHashCode
 @Entity
 @Table(name = "exam_post")
@@ -31,6 +30,7 @@ public class ExamPost {
     @JoinColumn(name = "author_id")
     private User author;
 
+    @Column(length = 2000)
     private String text;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -40,6 +40,6 @@ public class ExamPost {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "examPost")
     private List<ExamPostComment> comments;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "examPost")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "examPost", cascade = CascadeType.PERSIST)
     private List<ExamPostFile> attachments;
 }
