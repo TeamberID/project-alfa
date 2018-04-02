@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.kpfu.itis.app.model.ExamPostFile;
 import ru.kpfu.itis.app.model.FileInfo;
 import ru.kpfu.itis.app.model.Image;
+import ru.kpfu.itis.app.model.TeacherPhoto;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -26,9 +27,18 @@ public class FileStorageUtil {
     @Value("${storage.path.doc}")
     private String examPostFilesStoragePath;
 
+    @Value("${storage.path.doc}")
+    private String teacherPhotoStoragePath;
+
     public FileInfo getDocFileInfoByMultipart(MultipartFile file) {
         FileInfo fileInfo = convertFromMultipart(file);
         fileInfo.setPath(getFullPathOfDoc(fileInfo.getStorageFileName()));
+        return fileInfo;
+    }
+
+    public FileInfo getTeacherPhotoByMultipart(MultipartFile file) {
+        FileInfo fileInfo = convertFromMultipart(file);
+        fileInfo.setPath(getFullPathOfTeacherPhoto(fileInfo.getStorageFileName()));
         return fileInfo;
     }
 
@@ -36,6 +46,10 @@ public class FileStorageUtil {
         FileInfo fileInfo = convertFromMultipart(file);
         fileInfo.setPath(getFullPathOfExamPost(fileInfo.getStorageFileName()));
         return fileInfo;
+    }
+
+    private String getFullPathOfTeacherPhoto(String storageName) {
+        return teacherPhotoStoragePath + "/" + storageName;
     }
 
     private String getFullPathOfDoc(String storageFileName) {
@@ -67,6 +81,11 @@ public class FileStorageUtil {
     @SneakyThrows
     public void saveExamPostFileToStorage(MultipartFile file, ExamPostFile examPostFile) {
         Files.copy(file.getInputStream(), Paths.get(docsStoragePath, examPostFile.getFileInfo().getStorageFileName()));
+    }
+
+    @SneakyThrows
+    public void saveTeacherPhotoToStorage(MultipartFile file, TeacherPhoto teacherPhoto) {
+        Files.copy(file.getInputStream(), Paths.get(docsStoragePath, teacherPhoto.getFileInfo().getStorageFileName()));
     }
 
     private String createStorageFileName(String originalFileName) {
