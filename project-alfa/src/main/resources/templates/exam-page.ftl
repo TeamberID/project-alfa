@@ -39,6 +39,7 @@
             <div class="col-md-6">
                 <h4>принимать экзамен у вас будет:</h4>
                 <h3 style="font-weight: bold">${model.exam.teacher.name}</h3>
+                <img src="/file/${model.exam.teacher.photo.fileInfo.id}" class="img-thumbnail img-responsive" alt="Your Teacher is Watching You!" width="200" height="400">
             </div>
             <div class="col-md-6">
                 <h4>дидактические материалы:</h4>
