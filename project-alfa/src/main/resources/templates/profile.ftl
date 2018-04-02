@@ -51,7 +51,7 @@
                 <div class="panel-body">
                     <h4><strong>преподаватели</strong></h4>
                     <h5>изучите отзывы студентов о преподавательском составе</h5>
-                    <a href="" class="btn btn-default" role="button">к преподавателям</a>
+                    <a href="/user/teachers/" class="btn btn-default" role="button">к преподавателям</a>
                 </div>
             </div>
         </div>
