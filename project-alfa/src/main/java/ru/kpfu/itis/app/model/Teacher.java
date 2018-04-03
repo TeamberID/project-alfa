@@ -39,4 +39,8 @@ public class Teacher {
             inverseJoinColumns = @JoinColumn(name = "subject_id", referencedColumnName = "id")
     )
     private List<Subject> subjects;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacher_score_id")
+    private TeacherScore teacherScore;
 }
