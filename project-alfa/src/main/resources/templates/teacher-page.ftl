@@ -39,22 +39,26 @@
             <img src="/file/${model.teacher.photo.fileInfo.id}" class="img-thumbnail img-responsive" alt="Your Teacher is Watching You!" width="200" height="300">
         </div>
         <div class="col-md-3">
-            <h4>предметы</h4>
-            <ul>
+            <div class="teacher-subject">
+                <h4><strong>предметы:</strong></h4>
+                <ul>
                 <#list model.teacher.subjects as subject>
                     <li>${subject.name}</li>
                 </#list>
-            </ul>
+                </ul>
+            </div>
         </div>
         <div class="col-md-6">
-            <form id="teacher-rate-form">
-
-            </form>
+            <div class="teacher-rate">
+                <h4><strong>оцените преподавателя:</strong></h4>
+                <form id="teacher-rate-form">
+                </form>
+            </div>
         </div>
     </div>
     <hr>
     <div>
-        <h2>отзывы о преподавателе</h2>
+        <h3>отзывы о преподавателе</h3>
         <div id="teacher-comments" class="well well-sm pre-scrollable">
             <#list model.teacher.comments as comment>
                 <div class="panel panel-default">
@@ -89,7 +93,7 @@
 </div>
 
 <#else>
-    <h1>Извините, данного преподавателя у нас нет.</h1>
+    <h1 style="padding-top: 60px">Извините, данного преподавателя у нас нет.</h1>
 </#if>
 </body>
 
