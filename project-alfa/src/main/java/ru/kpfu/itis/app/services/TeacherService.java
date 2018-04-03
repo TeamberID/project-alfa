@@ -2,6 +2,8 @@ package ru.kpfu.itis.app.services;
 
 import org.springframework.security.core.Authentication;
 import ru.kpfu.itis.app.dto.TeacherDto;
+import ru.kpfu.itis.app.dto.TeacherScoreDto;
+import ru.kpfu.itis.app.forms.TeacherVoteFrom;
 import ru.kpfu.itis.app.model.Teacher;
 
 import java.util.List;
@@ -14,4 +16,8 @@ public interface TeacherService {
     List<TeacherDto> getUserTeachersDto(Authentication authentication);
 
     Teacher getTeacherById(Long teacherId);
+
+    void updateTeacherRating(TeacherVoteFrom teacherVoteFrom, Authentication authentication);
+
+    TeacherScoreDto getTeacherScoreDtoByTeacherId(Long teacherId);
 }

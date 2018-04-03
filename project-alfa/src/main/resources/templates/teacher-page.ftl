@@ -50,9 +50,39 @@
         </div>
         <div class="col-md-6">
             <div class="teacher-rate">
-                <h4><strong>оцените преподавателя:</strong></h4>
-                <form id="teacher-rate-form">
-                </form>
+                <h4 id="teacher-current-score"><strong>текущая оценка преподавателя: ${model.teacher.teacherScore.getAverage()}</strong></h4>
+                <#if model.isVoted>
+                    <form id="teacher-rate-form">
+                        <#list model.teacher.teacherScore.criteriaScores as criteriaScore>
+                            <div class="row" style="padding-top: 2px">
+                                <div class="col-md-6">
+                                    <p>${criteriaScore.criteria.name}</p>
+                                </div>
+                                <div id="criteria-${criteriaScore?index}" class="col-md-6">
+                                    <input id="criteria-value-${criteriaScore?index}" value="${criteriaScore.getAverage()}" class="form-control" type="number" disabled>
+                                </div>
+                            </div>
+                        </#list>
+                    </form>
+                <#else>
+                    <form id="teacher-rate-form">
+                        <#list model.teacher.teacherScore.criteriaScores as criteriaScore>
+                            <div class="row" style="padding-top: 2px">
+                                <div class="col-md-6">
+                                    <p>${criteriaScore.criteria.name}</p>
+                                </div>
+                                <div id="criteria-${criteriaScore?index}" class="col-md-6">
+                                    <input id="criteria-value-${criteriaScore?index}" class="form-control" type="number">
+                                </div>
+                            </div>
+                        </#list>
+                        <div class="row" style="padding-top: 2px">
+                            <div class="col-md-12">
+                                <button id="teacher-rate-form-button" class="btn btn-default" type="button" onclick="uploadTeacherVoteForm(${model.teacher.id})">оценить</button>
+                            </div>
+                        </div>
+                    </form>
+                </#if>
             </div>
         </div>
     </div>
@@ -98,6 +128,64 @@
 </body>
 
 <script>
+    function uploadTeacherVoteForm(teacherId) {
+        var criteriaLength = 5;
+        var criteriaList = [];
+        for (var i = 0; i < criteriaLength; i++) {
+            var criteriaId = i + 1;
+            var voteValue = $("#criteria-value-" + i).val();
+            criteriaList[i] = {criteriaId: criteriaId, rate: voteValue};
+        }
+        var data = JSON.stringify({"teacherId": teacherId, "criteriaVotes": criteriaList});
+
+        $.ajax({
+            url: '/api/teacher/vote',
+            type: 'POST',
+            data: data,
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (data) {
+                updateTeacherScore(data);
+            },
+            error: function () {
+                createAlertMessage("сервер едва дышит. извините, попробуйте позже");
+                console.log('uploadTeacherVoteForm method error')
+            }
+        });
+    }
+
+    function updateTeacherScore(data) {
+        var teacherScore = data;
+        var averageTeacherScore = teacherScore.sum / teacherScore.voteCount;
+        updateCurrentScore(averageTeacherScore);
+        updateRateForm(teacherScore.criteriaScores);
+        hideRateFormButton();
+    }
+
+    function updateCurrentScore(averageTeacherScore) {
+        var score = $("#teacher-current-score");
+        score.html("");
+        score.append(
+            '<h4 id="teacher-current-score"><strong>текущая оценка преподавателя: ' + averageTeacherScore + '</strong></h4>'
+        );
+    }
+
+    function updateRateForm(criteriaScores) {
+        for (var i = 0; i < criteriaScores.length; i++) {
+            var score = criteriaScores[i];
+            var criteriaScore = score.sum / score.voteCount;
+            var currentDiv = $("#criteria-" + i);
+            currentDiv.html("");
+            currentDiv.append(
+                '<input id="criteria-value-' + i + '" value="' + criteriaScore + '" class="form-control" type="number" disabled>'
+            );
+        }
+    }
+
+    function hideRateFormButton() {
+        $("#teacher-rate-form-button").hide();
+    }
+
     function addNewTeacherComment(teacherId) {
         if (isCommentValid()) {
             uploadTeacherCommentToServer(teacherId);
