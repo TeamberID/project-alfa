@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import javax.validation.constraints.Size;
 
 /**
  * Created by Melnikov Semen
@@ -19,6 +19,10 @@ import java.util.List;
 @Setter
 public class ExamPostAddingForm {
     private Long examId;
+
+    @Size(max=250)
     private String text;
+
+    @Size(max=20)
     private MultipartFile[] files;
 }

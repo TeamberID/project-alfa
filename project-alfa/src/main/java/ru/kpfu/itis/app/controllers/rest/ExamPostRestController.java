@@ -9,6 +9,7 @@ import ru.kpfu.itis.app.dto.ExamPostDto;
 import ru.kpfu.itis.app.forms.ExamPostAddingForm;
 import ru.kpfu.itis.app.services.ExamPostService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -27,8 +28,9 @@ public class ExamPostRestController {
     }
 
     @PostMapping("")
-    public List<ExamPostDto> addNewExamPost(@ModelAttribute ExamPostAddingForm form, Authentication authentication) {
-        examPostService.addExamPost(authentication, form);
+    public List<ExamPostDto> addNewExamPost(@ModelAttribute @Valid ExamPostAddingForm form, Authentication authentication) {
+
+
         return examPostService.getAllDtoByExamId(form.getExamId());
     }
 }
