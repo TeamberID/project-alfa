@@ -73,8 +73,9 @@
                                     <input type="checkbox" name="remember-me">
                                 </div>
                                 <div class="col-lg-10">
-                                    <label><- запомнить меня</label>
+                                    <label> запомнить меня</label>
                                 </div>
+                                <div class="clearfix"></div>
                             </div>
                         </div>
                         <div class="form-group">

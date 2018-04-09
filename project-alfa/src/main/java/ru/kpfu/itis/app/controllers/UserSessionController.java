@@ -1,20 +1,18 @@
 package ru.kpfu.itis.app.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.kpfu.itis.app.model.Session;
-import ru.kpfu.itis.app.model.User;
-import ru.kpfu.itis.app.model.UserData;
-import ru.kpfu.itis.app.repositories.SessionsRepository;
-import ru.kpfu.itis.app.repositories.UserDataRepository;
-import ru.kpfu.itis.app.services.AuthenticationService;
+import ru.kpfu.itis.app.model.Exam;
+import ru.kpfu.itis.app.services.ExamPostService;
+import ru.kpfu.itis.app.services.ExamService;
+import ru.kpfu.itis.app.services.SessionService;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created by Robert Gareev
@@ -23,34 +21,42 @@ import java.time.LocalDateTime;
  */
 @Controller
 @RequestMapping("/user/session")
+<<<<<<< HEAD:project-alfa/src/main/java/ru/kpfu/itis/app/controllers/UserSessionController.java
 public class UserSessionController {
     @Autowired
     private AuthenticationService authenticationService;
     @Autowired
     private SessionsRepository sessionsRepository;
+=======
+public class SessionController {
+
+    private SessionService sessionService;
+    private ExamService examService;
+    private ExamPostService examPostService;
+
+    public SessionController(SessionService sessionService, ExamService examService, ExamPostService examPostService) {
+        this.sessionService = sessionService;
+        this.examService = examService;
+        this.examPostService = examPostService;
+    }
+>>>>>>> d8b2b29360bfeab196a45bc7f089ab37da3aae70:project-alfa/src/main/java/ru/kpfu/itis/app/controllers/SessionController.java
 
     @GetMapping("")
-    public String getRegistrationKeyRequestsPage(@ModelAttribute("model") ModelMap model, Authentication authentication) {
-        UserData userData = authenticationService.getUserByAuthentication(authentication);
-        User user = userData.getUser();
-        byte semesterNumber = convertCourseIntoSemesterNumber(user.getCourse());
-        Session usersSession = sessionsRepository.findOneBySemesterNumberAndInstitute(semesterNumber, user.getInstitute());
-        if (usersSession != null){
-            model.addAttribute("exams", usersSession.getExams());
-        }else{
-            model.addAttribute("exams", null);
-        }
+    public String getSessionPage(@ModelAttribute("model") ModelMap model, Authentication authentication) {
+        List<Exam> exams = sessionService.getUserExams(authentication);
+        model.addAttribute("exams", exams);
         return "session";
     }
 
-    private byte convertCourseIntoSemesterNumber(byte course) {
-        LocalDateTime currentDate = LocalDateTime.now();
-        if (currentDate.getMonth().getValue() < 2 && currentDate.getMonth().getValue() > 8) {
-            // 1st half-year
-            return (byte) ((course - 1) * 2 + 1);
-        } else {
-            //2nd half-year
-            return (byte) ((course - 1) * 2 + 2);
-        }
+    @GetMapping("/exam/{id}")
+    public String getExamPage(@ModelAttribute("model") ModelMap model, @PathVariable("id") Long examId) {
+        model.addAttribute("exam", examService.getExamById(examId));
+        return "exam-page";
+    }
+
+    @GetMapping("/exam-post/{id}")
+    public String getExamPostPage(@ModelAttribute("model") ModelMap model, @PathVariable("id") Long examPostId) {
+        model.addAttribute("post", examPostService.getExamPost(examPostId));
+        return "exam-post-page";
     }
 }

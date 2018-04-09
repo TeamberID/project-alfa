@@ -5,8 +5,10 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import ru.kpfu.itis.app.model.ExamPostFile;
 import ru.kpfu.itis.app.model.FileInfo;
 import ru.kpfu.itis.app.model.Image;
+import ru.kpfu.itis.app.model.TeacherPhoto;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -22,14 +24,40 @@ public class FileStorageUtil {
     @Value("${storage.path.doc}")
     private String docsStoragePath;
 
+    @Value("${storage.path.doc}")
+    private String examPostFilesStoragePath;
+
+    @Value("${storage.path.doc}")
+    private String teacherPhotoStoragePath;
+
     public FileInfo getDocFileInfoByMultipart(MultipartFile file) {
         FileInfo fileInfo = convertFromMultipart(file);
         fileInfo.setPath(getFullPathOfDoc(fileInfo.getStorageFileName()));
         return fileInfo;
     }
 
+    public FileInfo getTeacherPhotoByMultipart(MultipartFile file) {
+        FileInfo fileInfo = convertFromMultipart(file);
+        fileInfo.setPath(getFullPathOfTeacherPhoto(fileInfo.getStorageFileName()));
+        return fileInfo;
+    }
+
+    public FileInfo getExamPostInfoByMultipart(MultipartFile file) {
+        FileInfo fileInfo = convertFromMultipart(file);
+        fileInfo.setPath(getFullPathOfExamPost(fileInfo.getStorageFileName()));
+        return fileInfo;
+    }
+
+    private String getFullPathOfTeacherPhoto(String storageName) {
+        return teacherPhotoStoragePath + "/" + storageName;
+    }
+
     private String getFullPathOfDoc(String storageFileName) {
         return docsStoragePath + "/" + storageFileName;
+    }
+
+    private String getFullPathOfExamPost(String storageFileName) {
+        return examPostFilesStoragePath + "/" + storageFileName;
     }
 
     private FileInfo convertFromMultipart(MultipartFile file) {
@@ -48,6 +76,16 @@ public class FileStorageUtil {
     @SneakyThrows
     public void saveDocumentImageToStorage(MultipartFile file, Image documentImage) {
         Files.copy(file.getInputStream(), Paths.get(docsStoragePath, documentImage.getFileInfo().getStorageFileName()));
+    }
+
+    @SneakyThrows
+    public void saveExamPostFileToStorage(MultipartFile file, ExamPostFile examPostFile) {
+        Files.copy(file.getInputStream(), Paths.get(docsStoragePath, examPostFile.getFileInfo().getStorageFileName()));
+    }
+
+    @SneakyThrows
+    public void saveTeacherPhotoToStorage(MultipartFile file, TeacherPhoto teacherPhoto) {
+        Files.copy(file.getInputStream(), Paths.get(docsStoragePath, teacherPhoto.getFileInfo().getStorageFileName()));
     }
 
     private String createStorageFileName(String originalFileName) {

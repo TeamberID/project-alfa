@@ -15,7 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
 @EqualsAndHashCode
 @Entity
 @Table(name = "teacher")
@@ -28,4 +27,20 @@ public class Teacher {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
     private List<TeacherComment> comments;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "photo_id")
+    private TeacherPhoto photo;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "teacher_subject",
+            joinColumns = @JoinColumn(name = "teacher_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "subject_id", referencedColumnName = "id")
+    )
+    private List<Subject> subjects;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacher_score_id")
+    private TeacherScore teacherScore;
 }

@@ -11,19 +11,27 @@
         jQuery(function ($) {
 
             function writeMessage(message) {
+
+                $('#messageOutput').css("visibility", "visible");
+
                 $('#messageOutput').text(message);
+
                 if (typeof websocket != 'undefined') {
+
                     websocket.close();
                     websocket = undefined;
+
                 }
             }
 
             $( document ).ready(function doConnect() {
+
                 websocket = new SockJS("http://p-alpha.website/echoHandler");
 
-
                 websocket.onmessage = function(evt) {
+
                     writeMessage(evt.data);
+
                 };
 
             });
@@ -35,38 +43,41 @@
 <h2>Registration keys requests</h2>
 <br>
 
-<label style="color: red" id="messageOutput"></label>
+<strong>
+<div id="messageOutput" style="visibility: hidden;" class="alert alert-success" role="alert">
+</div>
+</strong>
 
 <br>
 <ul id="requests-list-group" class="list-group">
-    <#list model.requests as currentRequest>
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-md-3">
-                    <h3>${currentRequest.surname} ${currentRequest.name}</h3>
-                    <img src="/file/${currentRequest.documentImage.fileInfo.id}" class="pull-left" height="auto" width="300"/>
-                </div>
-                <div class="col-md-4">
-                    <p>University: ${currentRequest.university.name}</p>
-                    <p>Institute: ${currentRequest.institute.name}</p>
-                    <p>Course: ${currentRequest.course}</p>
-                    <p>Group: ${currentRequest.group}</p>
-                </div>
-                <div class="col-md-4">
-                    <p>Email: ${currentRequest.email}</p>
-                    <p>Count: ${currentRequest.countOfKey}</p>
-                </div>
-                <div class="col-md-1">
-                    <button class="btn btn-success" onclick="acceptRequest(${currentRequest.id})">
-                        Accept
-                    </button>
-                    <button class="btn btn-danger" onclick="denyRequest(${currentRequest.id})">
-                        Deny
-                    </button>
-                </div>
+<#list model.requests as currentRequest>
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col-md-3">
+                <h3>${currentRequest.surname} ${currentRequest.name}</h3>
+                <img src="/file/${currentRequest.documentImage.fileInfo.id}" class="pull-left" height="auto" width="300"/>
             </div>
-        </li>
-    </#list>
+            <div class="col-md-4">
+                <p>University: ${currentRequest.university.name}</p>
+                <p>Institute: ${currentRequest.institute.name}</p>
+                <p>Course: ${currentRequest.course}</p>
+                <p>Group: ${currentRequest.group}</p>
+            </div>
+            <div class="col-md-4">
+                <p>Email: ${currentRequest.email}</p>
+                <p>Count: ${currentRequest.countOfKey}</p>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-success" onclick="acceptRequest(${currentRequest.id})">
+                    Accept
+                </button>
+                <button class="btn btn-danger" onclick="denyRequest(${currentRequest.id})">
+                    Deny
+                </button>
+            </div>
+        </div>
+    </li>
+</#list>
 </ul>
 <script>
     // fillRequestList(model.requests);
@@ -103,30 +114,30 @@
             var currentRequest = data[i];
             $("#requests-list-group").append(
                     '<li class="list-group-item">' +
-                        '<div class="row">' +
-                            '<div class="col-md-3">' +
-                                '<h3>' + currentRequest.surname + ' ' + currentRequest.name + '</h3>' +
-                                '<img src="/file/' + currentRequest.documentImage.fileInfo.id + '" class="pull-left" height="auto" width="300"/>' +
-                            '</div>' +
-                            '<div class="col-md-4">' +
-                                '<p>University: ' + currentRequest.university + '</p>' +
-                                '<p>Institute: ' + currentRequest.institute + '</p>' +
-                                '<p>Course: ' + currentRequest.course + '</p>' +
-                                '<p>Group: ' + currentRequest.group + '</p>' +
-                            '</div>' +
-                            '<div class="col-md-4">' +
-                                '<p>Email: ' + currentRequest.email + '</p>' +
-                                '<p>Count: ' + currentRequest.countOfKey + '</p>' +
-                            '</div>' +
-                            '<div class="col-md-1">' +
-                                '<button class="btn btn-success" onclick="acceptRequest(' + currentRequest.id+ ')">' +
-                                    'Accept' +
-                                '</button>' +
-                                '<button class="btn btn-danger" onclick="denyRequest(' + currentRequest.id+ ')">' +
-                                    'Deny' +
-                                '</button>' +
-                            '</div>' +
-                        '</div>' +
+                    '<div class="row">' +
+                    '<div class="col-md-3">' +
+                    '<h3>' + currentRequest.surname + ' ' + currentRequest.name + '</h3>' +
+                    '<img src="/file/' + currentRequest.documentImage.fileInfo.id + '" class="pull-left" height="auto" width="300"/>' +
+                    '</div>' +
+                    '<div class="col-md-4">' +
+                    '<p>University: ' + currentRequest.university + '</p>' +
+                    '<p>Institute: ' + currentRequest.institute + '</p>' +
+                    '<p>Course: ' + currentRequest.course + '</p>' +
+                    '<p>Group: ' + currentRequest.group + '</p>' +
+                    '</div>' +
+                    '<div class="col-md-4">' +
+                    '<p>Email: ' + currentRequest.email + '</p>' +
+                    '<p>Count: ' + currentRequest.countOfKey + '</p>' +
+                    '</div>' +
+                    '<div class="col-md-1">' +
+                    '<button class="btn btn-success" onclick="acceptRequest(' + currentRequest.id+ ')">' +
+                    'Accept' +
+                    '</button>' +
+                    '<button class="btn btn-danger" onclick="denyRequest(' + currentRequest.id+ ')">' +
+                    'Deny' +
+                    '</button>' +
+                    '</div>' +
+                    '</div>' +
                     '</li>'
             );
         }
