@@ -9,6 +9,9 @@
     /* границы ячеек тела таблицы */
     td {border: 1px solid grey;}
 </style>
+<form action="/admin" method="get">
+    <button>На главную</button>
+</form>
 <table>
     <tr>
         <th>Id</th>

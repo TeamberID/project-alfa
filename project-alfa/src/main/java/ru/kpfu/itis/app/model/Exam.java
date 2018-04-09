@@ -24,6 +24,8 @@ public class Exam {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Byte semesterNumber;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
     private Subject subject;

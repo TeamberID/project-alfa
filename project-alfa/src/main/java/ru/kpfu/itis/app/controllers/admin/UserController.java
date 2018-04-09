@@ -61,7 +61,6 @@ public class UserController {
     public String editUser(RedirectAttributes redirectAttributes, @PathVariable("id")Long id,
                            @Valid @ModelAttribute("userEditForm") UserEditForm userEditForm,
                            BindingResult errors){
-        System.out.println(userEditForm.toString());
         boolean flag =false;
         try {
             userDatasService.add(userEditForm);

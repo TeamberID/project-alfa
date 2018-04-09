@@ -10,7 +10,12 @@
         ошибка
     </#if>
 </#if>
-<a href="/admin/users">Назад к списку</a>
+<form action="/admin" method="get">
+    <button>На главную</button>
+</form>
+<form method="get" action="/admin/users">
+    <button>Назад к списку</button>
+</form>
 <div>
     <form class="form-horizontal" method="post" action="/admin/users/${model.user.id}/edit">
 

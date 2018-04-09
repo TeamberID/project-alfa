@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
  */
 @Controller
 @RequestMapping("/user/session")
-public class SessionController {
+public class UserSessionController {
     @Autowired
     private AuthenticationService authenticationService;
     @Autowired

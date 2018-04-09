@@ -12,34 +12,44 @@
 <form action="/admin" method="get">
     <button>На главную</button>
 </form>
-<form method="get" action="/admin/universities/add">
+<form method="get" action="/admin/sessions/add">
     <button>Добавить</button>
 </form>
 <table>
     <tr>
         <th>Id</th>
-        <th>Name</th>
-        <th>Institutes</th>
+        <th>Semester</th>
+        <th>Institute</th>
+        <th>Exams</th>
         <th></th>
     </tr>
-<#list model.universities as uni>
+<#list model.sessions as session>
     <tr>
-        <td>${uni.id}</td>
-        <td>${uni.name}</td>
+        <td>${session.id}</td>
+        <td>${session.semesterNumber}</td>
+        <td>${session.institute.name}</td>
         <td>
             <details>
                 <ol>
-                    <#list uni.institutes as inst>
-                        <li>${inst.name} </li>
+                    <#list session.exams as exam>
+                        <li>${exam.id} </li>
                     </#list>
                 </ol>
             </details>
         </td>
         <td>
-            <form method="post" action="/admin/universities/${uni.id}/delete">
+            <form method="get" action="/admin/sessions/${session.id}">
+                <button>edit</button>
+            </form>
+        </td>
+        <td>
+            <form method="post" action="/admin/sessions/${session.id}/delete">
                 <button>delete</button>
             </form>
         </td>
+    <#--
+            <td>${user.user.group}</td>
+    -->
     </tr>
 </#list>
 </table>

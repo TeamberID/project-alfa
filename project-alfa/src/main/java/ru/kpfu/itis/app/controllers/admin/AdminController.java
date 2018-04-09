@@ -25,13 +25,6 @@ public class AdminController {
 
     private RegistrationKeyRequestService registrationKeyRequestService;
 
-
-    @Autowired
-    private InstituteService instituteService;
-
-    @Autowired
-    private UniversityService universityService;
-
     public AdminController(RegistrationKeyRequestService registrationKeyRequestService) {
         this.registrationKeyRequestService = registrationKeyRequestService;
     }
@@ -42,14 +35,10 @@ public class AdminController {
         return "admin/registration-key-requests";
     }
 
-    @GetMapping("/institutes")
-    public String getIntitutes(@ModelAttribute("model")ModelMap model){
-        model.addAttribute("institutes", instituteService.getAll());
-        return "admin/entities/institutes";
+    @GetMapping("")
+    public String getMainAdminPage(){
+        return "admin/admin_main";
     }
-    @GetMapping("/universities")
-    public String getUniversities(@ModelAttribute("model")ModelMap model){
-        model.addAttribute("universities", universityService.getAll());
-        return "admin/entities/universities";
-    }
+
+
 }
