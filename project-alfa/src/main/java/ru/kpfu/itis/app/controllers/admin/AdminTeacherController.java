@@ -21,7 +21,7 @@ import javax.validation.Valid;
  */
 @Controller
 @RequestMapping("/admin/teachers")
-public class TeacherController {
+public class AdminTeacherController {
     @Autowired
     private TeacherService teacherService;
 

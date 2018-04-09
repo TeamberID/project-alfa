@@ -42,7 +42,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 	@Override
     public void delete(Long id) {
-        teachersRepository.delete(id);
+        teacherRepository.delete(id);
 	}
     @Override
     public List<TeacherDto> getUserTeachersDto(Authentication authentication) {
@@ -58,12 +58,12 @@ public class TeacherServiceImpl implements TeacherService {
 	
 	@Override
     public List<Teacher> getAll() {
-        return teachersRepository.findAll();
+        return teacherRepository.findAll();
     }
 	
 	@Override
     public void add(TeacherAddingForm teacherAddingForm) {
-        teachersRepository.save(Teacher.builder()
+        teacherRepository.save(Teacher.builder()
                 .name(teacherAddingForm.getName())
                 .build());
     }

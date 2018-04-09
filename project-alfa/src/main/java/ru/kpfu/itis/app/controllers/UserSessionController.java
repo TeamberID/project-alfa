@@ -21,25 +21,18 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/user/session")
-<<<<<<< HEAD:project-alfa/src/main/java/ru/kpfu/itis/app/controllers/UserSessionController.java
+
 public class UserSessionController {
-    @Autowired
-    private AuthenticationService authenticationService;
-    @Autowired
-    private SessionsRepository sessionsRepository;
-=======
-public class SessionController {
 
     private SessionService sessionService;
     private ExamService examService;
     private ExamPostService examPostService;
 
-    public SessionController(SessionService sessionService, ExamService examService, ExamPostService examPostService) {
+    public UserSessionController(SessionService sessionService, ExamService examService, ExamPostService examPostService) {
         this.sessionService = sessionService;
         this.examService = examService;
         this.examPostService = examPostService;
     }
->>>>>>> d8b2b29360bfeab196a45bc7f089ab37da3aae70:project-alfa/src/main/java/ru/kpfu/itis/app/controllers/SessionController.java
 
     @GetMapping("")
     public String getSessionPage(@ModelAttribute("model") ModelMap model, Authentication authentication) {

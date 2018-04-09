@@ -1,6 +1,6 @@
 package ru.kpfu.itis.app.services;
 
-<<<<<<< HEAD
+
 import ru.kpfu.itis.app.forms.ExamAddingForm;
 import ru.kpfu.itis.app.model.Exam;
 
@@ -17,16 +17,8 @@ public interface ExamService {
     void add(ExamAddingForm examAddingForm);
 
     void delete(Long id);
+	
+	 Exam getExamById(Long id);
 
     Exam get(Long id);
-=======
-import ru.kpfu.itis.app.model.Exam;
-
-/**
- * Created by Melnikov Semen
- * 11-601 ITIS KPFU
- */
-public interface ExamService {
-    Exam getExamById(Long id);
->>>>>>> d8b2b29360bfeab196a45bc7f089ab37da3aae70
 }
