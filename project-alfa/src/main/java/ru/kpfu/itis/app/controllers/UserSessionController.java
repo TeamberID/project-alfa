@@ -21,13 +21,14 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/user/session")
-public class SessionController {
+
+public class UserSessionController {
 
     private SessionService sessionService;
     private ExamService examService;
     private ExamPostService examPostService;
 
-    public SessionController(SessionService sessionService, ExamService examService, ExamPostService examPostService) {
+    public UserSessionController(SessionService sessionService, ExamService examService, ExamPostService examPostService) {
         this.sessionService = sessionService;
         this.examService = examService;
         this.examPostService = examPostService;

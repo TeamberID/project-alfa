@@ -1,6 +1,7 @@
 package ru.kpfu.itis.app.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import ru.kpfu.itis.app.model.Institute;
 import ru.kpfu.itis.app.model.University;
 
 import java.util.Optional;
@@ -12,4 +13,5 @@ import java.util.Optional;
  */
 public interface UniversitiesRepository extends JpaRepository<University,Long> {
     Optional<University> findById(Long id);
+
 }

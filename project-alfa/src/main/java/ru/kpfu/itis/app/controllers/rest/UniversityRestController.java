@@ -10,6 +10,7 @@ import ru.kpfu.itis.app.services.InstituteService;
 
 import java.util.List;
 
+
 /**
  * Created by Melnikov Semen
  * 11-601 ITIS KPFU
@@ -17,11 +18,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/university")
-public class UniversityController {
+public class UniversityRestController {
     private InstituteService instituteService;
 
     @Autowired
-    public UniversityController(InstituteService instituteService) {
+    public UniversityRestController(InstituteService instituteService) {
         this.instituteService = instituteService;
     }
 
