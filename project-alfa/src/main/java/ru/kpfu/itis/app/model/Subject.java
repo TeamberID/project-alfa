@@ -3,6 +3,7 @@ package ru.kpfu.itis.app.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Robert Gareev
@@ -23,4 +24,7 @@ public class Subject {
     private Long id;
 
     private String name;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "subject")
+    private List<Manual> manuals;
 }

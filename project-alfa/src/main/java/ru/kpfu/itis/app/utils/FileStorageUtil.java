@@ -5,10 +5,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import ru.kpfu.itis.app.model.ExamPostFile;
-import ru.kpfu.itis.app.model.FileInfo;
-import ru.kpfu.itis.app.model.Image;
-import ru.kpfu.itis.app.model.TeacherPhoto;
+import ru.kpfu.itis.app.model.*;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -30,6 +27,9 @@ public class FileStorageUtil {
     @Value("${storage.path.doc}")
     private String teacherPhotoStoragePath;
 
+    @Value("${storage.path.doc}")
+    private String manualStoragePath;
+
     public FileInfo getDocFileInfoByMultipart(MultipartFile file) {
         FileInfo fileInfo = convertFromMultipart(file);
         fileInfo.setPath(getFullPathOfDoc(fileInfo.getStorageFileName()));
@@ -42,10 +42,20 @@ public class FileStorageUtil {
         return fileInfo;
     }
 
+    public FileInfo getManualFileInfoByMultipart(MultipartFile file) {
+        FileInfo fileInfo = convertFromMultipart(file);
+        fileInfo.setPath(getFullPathOfManual(fileInfo.getStorageFileName()));
+        return fileInfo;
+    }
+
     public FileInfo getExamPostInfoByMultipart(MultipartFile file) {
         FileInfo fileInfo = convertFromMultipart(file);
         fileInfo.setPath(getFullPathOfExamPost(fileInfo.getStorageFileName()));
         return fileInfo;
+    }
+
+    private String getFullPathOfManual(String storageFileName) {
+        return manualStoragePath + "/" + storageFileName;
     }
 
     private String getFullPathOfTeacherPhoto(String storageName) {
@@ -86,6 +96,11 @@ public class FileStorageUtil {
     @SneakyThrows
     public void saveTeacherPhotoToStorage(MultipartFile file, TeacherPhoto teacherPhoto) {
         Files.copy(file.getInputStream(), Paths.get(docsStoragePath, teacherPhoto.getFileInfo().getStorageFileName()));
+    }
+
+    @SneakyThrows
+    public void saveManualToStorage(MultipartFile file, Manual manual) {
+        Files.copy(file.getInputStream(), Paths.get(manualStoragePath, manual.getFileInfo().getStorageFileName()));
     }
 
     private String createStorageFileName(String originalFileName) {

@@ -42,7 +42,7 @@
                 <div class="panel-body">
                     <h4><strong>материалы</strong></h4>
                     <h5>воспользуйтесь учебными материалами, которые мы собрали для вас</h5>
-                    <a href="" class="btn btn-default" role="button">к материалам</a>
+                    <a href="/user/manuals/" class="btn btn-default" role="button">к материалам</a>
                 </div>
             </div>
         </div>
