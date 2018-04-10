@@ -1,5 +1,8 @@
 package ru.kpfu.itis.app.services.impl;
 
+
+import ru.kpfu.itis.app.forms.TeacherAddingForm;
+import ru.kpfu.itis.app.model.Teacher;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.app.dto.TeacherDto;
@@ -37,7 +40,10 @@ public class TeacherServiceImpl implements TeacherService {
         this.authenticationService = authenticationService;
         this.teacherVoteRepository = teacherVoteRepository;
     }
-
+	@Override
+    public void delete(Long id) {
+        teacherRepository.delete(id);
+	}
     @Override
     public List<TeacherDto> getUserTeachersDto(Authentication authentication) {
         return sessionService.getUserExams(authentication).stream()
@@ -48,6 +54,18 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Teacher getTeacherById(Long teacherId) {
         return teacherRepository.findOne(teacherId);
+    }
+	
+	@Override
+    public List<Teacher> getAll() {
+        return teacherRepository.findAll();
+    }
+	
+	@Override
+    public void add(TeacherAddingForm teacherAddingForm) {
+        teacherRepository.save(Teacher.builder()
+                .name(teacherAddingForm.getName())
+                .build());
     }
 
     @Override

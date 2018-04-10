@@ -1,5 +1,6 @@
 package ru.kpfu.itis.app.services;
 
+import ru.kpfu.itis.app.forms.InstituteAddingForm;
 import ru.kpfu.itis.app.model.Institute;
 
 import java.util.List;
@@ -10,4 +11,8 @@ import java.util.List;
  */
 public interface InstituteService {
     List<Institute> getInstitutesByUniversityId(Long universityId);
+    List<Institute> getAll();
+    void add(InstituteAddingForm instituteAddingForm);
+
+    void delete(Long id);
 }

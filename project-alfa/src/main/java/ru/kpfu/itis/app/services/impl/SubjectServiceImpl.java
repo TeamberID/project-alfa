@@ -2,6 +2,7 @@ package ru.kpfu.itis.app.services.impl;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import ru.kpfu.itis.app.forms.SubjectAddingForm;
 import ru.kpfu.itis.app.model.Exam;
 import ru.kpfu.itis.app.model.Subject;
 import ru.kpfu.itis.app.repositories.SubjectRepository;
@@ -11,11 +12,6 @@ import ru.kpfu.itis.app.services.SubjectService;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-/**
- * Created by Melnikov Semen
- * 11-601 ITIS KPFU
- */
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
@@ -45,4 +41,22 @@ public class SubjectServiceImpl implements SubjectService {
     public Subject getSubjectByExamId(Long examId) {
         return examService.getExamById(examId).getSubject();
     }
+
+    @Override
+    public List<Subject> getAll() {
+        return subjectRepository.findAll();
+    }
+
+    @Override
+    public void add(SubjectAddingForm subjectAddingForm) {
+        subjectRepository.save(Subject.builder()
+                .name(subjectAddingForm.getName())
+                .build());
+    }
+
+    @Override
+    public void delete(Long id) {
+        subjectRepository.delete(id);
+    }
+
 }
