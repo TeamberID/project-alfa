@@ -33,4 +33,8 @@ public class Manual {
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exam_id")
+    private Exam exam;
+
 }

@@ -1,11 +1,13 @@
 package ru.kpfu.itis.app.services.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.app.model.Exam;
 import ru.kpfu.itis.app.model.Session;
 import ru.kpfu.itis.app.model.User;
 import ru.kpfu.itis.app.model.UserData;
+import ru.kpfu.itis.app.repositories.InstitutesRepository;
 import ru.kpfu.itis.app.repositories.SessionsRepository;
 import ru.kpfu.itis.app.services.AuthenticationService;
 import ru.kpfu.itis.app.services.SessionService;
@@ -23,6 +25,9 @@ public class SessionServiceImpl implements SessionService {
     private AuthenticationService authenticationService;
     private SessionsRepository sessionRepository;
 
+    @Autowired
+    private InstitutesRepository instituteRepository;
+
     public SessionServiceImpl(AuthenticationService authenticationService, SessionsRepository sessionRepository) {
         this.authenticationService = authenticationService;
         this.sessionRepository = sessionRepository;
@@ -32,9 +37,9 @@ public class SessionServiceImpl implements SessionService {
     public List<Exam> getUserExams(Authentication authentication) {
         UserData userData = authenticationService.getUserByAuthentication(authentication);
         User user = userData.getUser();
-        byte semesterNumber = convertCourseToSemesterNumber(user.getCourse());
+        byte semesterNumber = convertCourseToSemesterNumber((byte)2);
         Session session = sessionRepository.findOneBySemesterNumberAndInstitute(
-                semesterNumber, user.getInstitute()
+                semesterNumber, instituteRepository.findOne(4L)
         );
         return session != null ? session.getExams() : null;
     }

@@ -11,5 +11,8 @@ import java.util.List;
  */
 public interface SubjectService {
     List<Subject> getUserSubjects(Authentication authentication);
+
     Subject getSubjectById(Long id);
+
+    Subject getSubjectByExamId(Long examId);
 }

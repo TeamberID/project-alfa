@@ -38,6 +38,9 @@ public class Exam {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "exam")
     private List<ExamPost> posts;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "exam")
+    private List<Manual> manuals;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "session_id")
     private Session session;

@@ -30,18 +30,18 @@
     </div>
 </nav>
 
-<#if model.subjects??>
+<#if model.exams??>
 
 <div class="container" style="padding-top: 60px">
     <h2>Предметы текущей сессии</h2>
-    <#list model.subjects?chunk(3) as subjectGroup>
+    <#list model.exams?chunk(3) as examGroup>
         <div class="row">
-            <#list subjectGroup as subject>
+            <#list examGroup as exam>
                 <div class="col-md-4">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <h4><strong>${subject.name}</strong></h4>
-                            <a href="/user/manuals/${subject.id}" class="btn btn-lg">
+                            <h4><strong>${exam.subject.name}</strong></h4>
+                            <a href="/user/manuals/${exam.id}" class="btn btn-lg">
                                 <span class="glyphicon glyphicon-chevron-down"></span>
                             </a>
                         </div>

@@ -35,21 +35,24 @@
 <div class="container" style="padding-top: 60px">
     <h2>${model.subject.name}</h2>
     <hr>
-    <div>
-        <#list model.subject.manuals as manual>
-            <div class="row">
-                <div class="col-md-5">
-                    <p>${manual.title}</p>
-                </div>
-                <div class="col-md-5">
-                    <p>${manual.author}</p>
-                </div>
-                <div class="col-md-2">
-                    <a href="/file/${manual.fileInfo.id}" class="btn btn-info" role="button" download><span class="glyphicon glyphicon-download"></span></a>
-                </div>
-            </div>
-        </#list>
-    </div>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Автор</th>
+                <th>Скачать</th>
+            </tr>
+        </thead>
+        <tbody>
+                <#list model.manuals as manual>
+                <tr>
+                    <td>${manual.title}</td>
+                    <td>${manual.author}</td>
+                    <td><a href="/file/${manual.fileInfo.id}" class="btn btn-default" role="button" download><span class="glyphicon glyphicon-download"></span></a></td>
+                </tr>
+                </#list>
+        </tbody>
+    </table>
 </div>
 
 <#else>

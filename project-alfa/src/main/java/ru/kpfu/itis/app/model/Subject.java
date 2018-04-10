@@ -24,7 +24,4 @@ public class Subject {
     private Long id;
 
     private String name;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "subject")
-    private List<Manual> manuals;
 }
