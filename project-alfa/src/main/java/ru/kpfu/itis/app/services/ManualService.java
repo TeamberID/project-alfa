@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface ManualService {
     List<Manual> getUserManualsByExamId(Long examId);
+    List<Manual> getUserManualsByExamIdAndCount(Long examId, Integer count);
 }

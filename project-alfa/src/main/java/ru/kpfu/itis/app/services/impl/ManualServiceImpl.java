@@ -6,6 +6,7 @@ import ru.kpfu.itis.app.services.ExamService;
 import ru.kpfu.itis.app.services.ManualService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Melnikov Semen
@@ -24,5 +25,12 @@ public class ManualServiceImpl implements ManualService {
     @Override
     public List<Manual> getUserManualsByExamId(Long examId) {
         return examService.getExamById(examId).getManuals();
+    }
+
+    @Override
+    public List<Manual> getUserManualsByExamIdAndCount(Long examId, Integer count) {
+        return getUserManualsByExamId(examId).stream()
+                .limit(count)
+                .collect(Collectors.toList());
     }
 }
