@@ -39,13 +39,30 @@
         <div class="row">
             <div class="col-md-6">
                 <h4>принимать экзамен у вас будет:</h4>
-                <h3 style="font-weight: bold">${model.exam.teacher.name}</h3>
-                <a href="/user/teachers/${model.exam.teacher.id}">Узнать больше...</a>
-                <img src="/file/${model.exam.teacher.photo.fileInfo.id}" class="img-thumbnail img-responsive"
-                     alt="Your Teacher is Watching You!" width="200" height="400">
+                <a href="/user/teachers/${model.exam.teacher.id}"><h3 style="font-weight: bold">${model.exam.teacher.name}</h3></a>
+                <img src="/file/${model.exam.teacher.photo.fileInfo.id}" class="img-thumbnail img-responsive" alt="Your Teacher is Watching You!" width="200" height="400">
             </div>
             <div class="col-md-6">
                 <h4>дидактические материалы:</h4>
+                <table class="table table-condensed table-responsive">
+                    <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Автор</th>
+                        <th>Скачать</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <#list model.manuals as manual>
+                    <tr>
+                        <td>${manual.title}</td>
+                        <td>${manual.author}</td>
+                        <td><a href="/file/${manual.fileInfo.id}" class="btn btn-default" role="button" download><span class="glyphicon glyphicon-download"></span></a></td>
+                    </tr>
+                    </#list>
+                    </tbody>
+                </table>
+                <a href="/user/manuals/${model.exam.id}">получить больше материалов</a>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -58,15 +75,12 @@
         <div id="exam-post-alert"></div>
         <form method="post" enctype="multipart/form-data" id="exam-post-form">
             <div class="form-group">
-                <textarea id="exam-post-text" name="text" class="form-control" placeholder="отзыв об экзамене" rows="6"
-                          required></textarea>
-
+                <textarea id="exam-post-text" name="text" class="form-control" placeholder="отзыв об экзамене" rows="6" wrap="hard" cols="20" required></textarea>
             </div>
             <div class="form-group">
                 <input id="files" type="file" multiple="multiple" name="files" accept="image/*"/>
             </div>
-            <button class="btn btn-default" type="button" onclick="addNewExamPost(${model.exam.id})">оставить отзыв
-            </button>
+            <button class="btn btn-default" type="button" onclick="addNewExamPost(${model.exam.id})">оставить отзыв</button>
             <div class="clearfix"></div>
         </form>
     </div>

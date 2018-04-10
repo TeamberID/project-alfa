@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kpfu.itis.app.model.Exam;
 import ru.kpfu.itis.app.services.ExamPostService;
 import ru.kpfu.itis.app.services.ExamService;
+import ru.kpfu.itis.app.services.ManualService;
 import ru.kpfu.itis.app.services.SessionService;
 
 import java.util.List;
@@ -27,11 +28,13 @@ public class UserSessionController {
     private SessionService sessionService;
     private ExamService examService;
     private ExamPostService examPostService;
+    private ManualService manualService;
 
-    public UserSessionController(SessionService sessionService, ExamService examService, ExamPostService examPostService) {
+    public UserSessionController(SessionService sessionService, ExamService examService, ExamPostService examPostService, ManualService manualService) {
         this.sessionService = sessionService;
         this.examService = examService;
         this.examPostService = examPostService;
+        this.manualService = manualService;
     }
 
     @GetMapping("")
@@ -44,6 +47,7 @@ public class UserSessionController {
     @GetMapping("/exam/{id}")
     public String getExamPage(@ModelAttribute("model") ModelMap model, @PathVariable("id") Long examId) {
         model.addAttribute("exam", examService.getExamById(examId));
+        model.addAttribute("manuals", manualService.getUserManualsByExamIdAndCount(examId, 5));
         return "exam-page";
     }
 

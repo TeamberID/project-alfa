@@ -29,8 +29,7 @@ public class ExamPostRestController {
 
     @PostMapping("")
     public List<ExamPostDto> addNewExamPost(@ModelAttribute @Valid ExamPostAddingForm form, Authentication authentication) {
-
-
+        examPostService.addExamPost(authentication, form);
         return examPostService.getAllDtoByExamId(form.getExamId());
     }
 }
