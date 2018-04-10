@@ -5,6 +5,8 @@
     <link href="/bootstrap/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/css/navbar.css" rel="stylesheet" type="text/css">
     <link href="/css/success-message.css" rel="stylesheet" type="text/css">
+    <script src="/js/jquery.js"></script>
+    <script src="/bootstrap/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
 </head>
 <body class="container">
 <nav class="navbar navbar-default navbar-fixed-top">
