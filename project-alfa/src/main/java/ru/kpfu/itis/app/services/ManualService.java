@@ -1,5 +1,6 @@
 package ru.kpfu.itis.app.services;
 
+import ru.kpfu.itis.app.forms.ManualAddingForm;
 import ru.kpfu.itis.app.model.Manual;
 
 import java.util.List;
@@ -11,4 +12,10 @@ import java.util.List;
 public interface ManualService {
     List<Manual> getUserManualsByExamId(Long examId);
     List<Manual> getUserManualsByExamIdAndCount(Long examId, Integer count);
+
+    List<Manual> getAllManuals();
+
+    void saveManual(ManualAddingForm form);
+
+    void deleteManualById(Long manualId);
 }

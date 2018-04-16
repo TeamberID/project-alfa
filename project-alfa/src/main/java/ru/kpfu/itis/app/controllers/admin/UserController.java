@@ -2,15 +2,12 @@ package ru.kpfu.itis.app.controllers.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.kpfu.itis.app.forms.UserEditForm;
-import ru.kpfu.itis.app.forms.UserRegistrationForm;
-import ru.kpfu.itis.app.model.UserData;
 import ru.kpfu.itis.app.repositories.UsersRepository;
 import ru.kpfu.itis.app.services.UserDatasService;
 import ru.kpfu.itis.app.validators.UserEditFormValidator;

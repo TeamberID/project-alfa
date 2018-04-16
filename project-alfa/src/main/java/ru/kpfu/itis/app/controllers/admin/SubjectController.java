@@ -8,7 +8,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.kpfu.itis.app.forms.SubjectAddingForm;
-import ru.kpfu.itis.app.repositories.SubjectRepository;
 import ru.kpfu.itis.app.services.SubjectService;
 import ru.kpfu.itis.app.validators.SubjectAddingFormValidator;
 
