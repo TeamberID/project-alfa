@@ -27,7 +27,7 @@ public class TeacherScore {
 
     private Long voteCount;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacherScore")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacherScore", cascade = CascadeType.PERSIST)
     private List<CriteriaScore> criteriaScores;
 
     public Double getAverage() {

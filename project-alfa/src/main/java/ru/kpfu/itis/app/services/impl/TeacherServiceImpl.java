@@ -10,11 +10,14 @@ import ru.kpfu.itis.app.dto.TeacherScoreDto;
 import ru.kpfu.itis.app.forms.TeacherVoteFrom;
 import ru.kpfu.itis.app.forms.UserCriteriaVote;
 import ru.kpfu.itis.app.model.*;
+import ru.kpfu.itis.app.repositories.CriteriaRepository;
+import ru.kpfu.itis.app.repositories.SubjectRepository;
 import ru.kpfu.itis.app.repositories.TeacherVoteRepository;
 import ru.kpfu.itis.app.repositories.TeachersRepository;
 import ru.kpfu.itis.app.services.AuthenticationService;
 import ru.kpfu.itis.app.services.SessionService;
 import ru.kpfu.itis.app.services.TeacherService;
+import ru.kpfu.itis.app.utils.FileStorageUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,15 +33,21 @@ public class TeacherServiceImpl implements TeacherService {
 
     private SessionService sessionService;
     private TeachersRepository teacherRepository;
+    private SubjectRepository subjectRepository;
+    private FileStorageUtil fileStorageUtil;
     private AuthenticationService authenticationService;
     private TeacherVoteRepository teacherVoteRepository;
+    private CriteriaRepository criteriaRepository;
 
     public TeacherServiceImpl(SessionService sessionService, TeachersRepository teacherRepository,
-                              AuthenticationService authenticationService, TeacherVoteRepository teacherVoteRepository) {
+                              SubjectRepository subjectRepository, FileStorageUtil fileStorageUtil, AuthenticationService authenticationService, TeacherVoteRepository teacherVoteRepository, CriteriaRepository criteriaRepository) {
         this.sessionService = sessionService;
         this.teacherRepository = teacherRepository;
+        this.subjectRepository = subjectRepository;
+        this.fileStorageUtil = fileStorageUtil;
         this.authenticationService = authenticationService;
         this.teacherVoteRepository = teacherVoteRepository;
+        this.criteriaRepository = criteriaRepository;
     }
 	@Override
     public void delete(Long id) {
@@ -63,8 +72,21 @@ public class TeacherServiceImpl implements TeacherService {
 	
 	@Override
     public void add(TeacherAddingForm teacherAddingForm) {
+        List<Subject> teacherSubjects = teacherAddingForm.getSubjectsId().stream()
+                .map(subjectRepository::findOne)
+                .collect(Collectors.toList());
+
+        FileInfo photoFileInfo = fileStorageUtil.getTeacherPhotoByMultipart(teacherAddingForm.getPhoto());
+        TeacherPhoto teacherPhoto = TeacherPhoto.builder().fileInfo(photoFileInfo).build();
+        fileStorageUtil.saveTeacherPhotoToStorage(teacherAddingForm.getPhoto(), teacherPhoto);
+
+        TeacherScore teacherScore = prepareStartedTeacherScore();
+
         teacherRepository.save(Teacher.builder()
                 .name(teacherAddingForm.getName())
+                .subjects(teacherSubjects)
+                .photo(teacherPhoto)
+                .teacherScore(teacherScore)
                 .build());
     }
 
@@ -86,6 +108,18 @@ public class TeacherServiceImpl implements TeacherService {
                         .userId(author.getId())
                         .build()
         );
+    }
+
+    private TeacherScore prepareStartedTeacherScore() {
+        TeacherScore teacherScore = TeacherScore.builder().sum(5D).voteCount(1L).build();
+
+        List<CriteriaScore> criteriaScoreList = criteriaRepository.findAll().stream()
+                .map(currentCriteria ->
+                        CriteriaScore.builder().teacherScore(teacherScore).criteria(currentCriteria).sum(5L).voteCount(1L).build())
+                .collect(Collectors.toList());
+
+        teacherScore.setCriteriaScores(criteriaScoreList);
+        return teacherScore;
     }
 
     private void updateTeacherScore(TeacherScore teacherScore, List<UserCriteriaVote> criteriaVotes) {
