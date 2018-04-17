@@ -1,0 +1,26 @@
+table{
+    text-align: center;
+    font-family: "Courier New", Courier, monospace;
+    text-transform: uppercase;
+    color: #0f0f0f;
+    width: 100%;
+}
+
+th{
+    text-align: center;
+    font-family: "Courier New", Courier, monospace;
+}
+
+.addbutton{
+    padding-left: 5px;
+    text-align: center;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bold;
+}
+
+.option{
+    padding-top: 10px;
+    text-align: center;
+    font-family: "Courier New", Courier, monospace;
+    border: none;
+}
