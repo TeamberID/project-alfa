@@ -5,6 +5,14 @@ a {
     color: #0f0f0f;
 }
 
+.navbar-brand{
+    text-align: center;
+    font-weight: bold;
+    font-family: "Courier New", Courier, monospace;
+    text-transform: uppercase;
+    color: #0f0f0f;
+}
+
 .panel {
     text-align: center;
     font-weight: bold;
