@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.kpfu.itis.app.forms.ExamAddingForm;
 import ru.kpfu.itis.app.services.ExamService;
-import ru.kpfu.itis.app.services.UniversityService;
 import ru.kpfu.itis.app.validators.ExamAddingFormValidator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +39,6 @@ public class ExamController {
                              HttpServletRequest req,
                              @ModelAttribute("model")ModelMap model,
                              BindingResult errors){
-        System.out.println(examAddingForm.toString());
         examService.add(examAddingForm);
         return "redirect:/admin/sessions/"+examAddingForm.getSession_id();
     }

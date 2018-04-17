@@ -16,3 +16,6 @@
 <form method="get" action="/admin/subjects">
     <button>Предметы</button>
 </form>
+<form method="get" action="/admin/manuals">
+    <button>Материалы</button>
+</form>

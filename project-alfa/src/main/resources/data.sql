@@ -30,42 +30,43 @@ INSERT INTO userdata(login, hash_password, role, user_status, user_id)
       WHERE id = 1
   );
 
-INSERT INTO university(name) SELECT 'Казанский (Приволжский) федеральный университет'
-WHERE NOT EXISTS (
-  SELECT id
-  FROM university
-  WHERE id = 2
-);
-
-INSERT INTO institute(name, university_id)
-  SELECT 'Институт физики', 2
+INSERT INTO criteria(name)
+  SELECT 'лояльность'
   WHERE NOT EXISTS (
       SELECT id
-      FROM institute
+      FROM criteria
+      WHERE id = 1
+  );
+
+INSERT INTO criteria(name)
+  SELECT 'возможность списать'
+  WHERE NOT EXISTS (
+      SELECT id
+      FROM criteria
       WHERE id = 2
   );
 
-INSERT INTO institute(name, university_id)
-  SELECT 'Инженерный институт', 2
+INSERT INTO criteria(name)
+  SELECT 'скорость сдачи'
   WHERE NOT EXISTS (
       SELECT id
-      FROM institute
+      FROM criteria
       WHERE id = 3
   );
 
-INSERT INTO institute(name, university_id)
-  SELECT 'Высшая школа ИТИС', 2
+INSERT INTO criteria(name)
+  SELECT 'адекватность'
   WHERE NOT EXISTS (
       SELECT id
-      FROM institute
+      FROM criteria
       WHERE id = 4
   );
 
-INSERT INTO institute(name, university_id)
-  SELECT 'Химический институт им. А.М.Бутлерова', 2
+INSERT INTO criteria(name)
+  SELECT 'легкость заданий'
   WHERE NOT EXISTS (
       SELECT id
-      FROM institute
+      FROM criteria
       WHERE id = 5
   );
 

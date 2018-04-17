@@ -40,7 +40,7 @@ public class Teacher {
     )
     private List<Subject> subjects;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "teacher_score_id")
     private TeacherScore teacherScore;
 }

@@ -1,17 +1,11 @@
 package ru.kpfu.itis.app.controllers.admin;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.kpfu.itis.app.model.UserData;
-import ru.kpfu.itis.app.repositories.UniversitiesRepository;
-import ru.kpfu.itis.app.services.InstituteService;
 import ru.kpfu.itis.app.services.RegistrationKeyRequestService;
-import ru.kpfu.itis.app.services.UniversityService;
-import ru.kpfu.itis.app.services.UserDatasService;
 
 
 /**

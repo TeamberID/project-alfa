@@ -1,6 +1,9 @@
 package ru.kpfu.itis.app.forms;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * Created by Robert Gareev
@@ -14,4 +17,6 @@ import lombok.*;
 @ToString
 public class TeacherAddingForm {
     private String name;
+    private MultipartFile photo;
+    private List<Long> subjectsId;
 }

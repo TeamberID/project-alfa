@@ -3,12 +3,11 @@
     <title>name project alfa. registration key requests</title>
     <link href="/bootstrap/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <script src="/js/jquery.js"></script>
-    <script src="/js/UploadImage.js"></script>
     <script src="/bootstrap/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
     <link href="/css/registration-key-request-page.css" rel="stylesheet" type="text/css">
     <link href="/css/navbar.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body class="container">
 <form action="/admin" method="get">
     <button>На главную</button>
 </form>
@@ -38,8 +37,6 @@
 
 
 <script>
-
-    document.getElementById('file').addEventListener('change', handleFileSelect, false);
 
     function updateInstituteSelect(instituteId) {
         clearInstituteSelect();

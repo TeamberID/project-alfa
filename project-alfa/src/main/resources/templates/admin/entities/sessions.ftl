@@ -32,7 +32,7 @@
             <details>
                 <ol>
                     <#list session.exams as exam>
-                        <li>${exam.id} </li>
+                        <li>${exam.subject.name} - ${exam.teacher.name}</li>
                     </#list>
                 </ol>
             </details>

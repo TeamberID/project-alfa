@@ -1,6 +1,5 @@
 package ru.kpfu.itis.app.controllers.admin;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -8,6 +7,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.kpfu.itis.app.forms.TeacherAddingForm;
+import ru.kpfu.itis.app.services.SubjectService;
 import ru.kpfu.itis.app.services.TeacherService;
 import ru.kpfu.itis.app.validators.TeacherAddingFormValidator;
 
@@ -22,11 +22,17 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/admin/teachers")
 public class AdminTeacherController {
-    @Autowired
     private TeacherService teacherService;
 
-    @Autowired
     private TeacherAddingFormValidator teacherAddingFormValidator;
+
+    private SubjectService subjectService;
+
+    public AdminTeacherController(TeacherService teacherService, TeacherAddingFormValidator teacherAddingFormValidator, SubjectService subjectService) {
+        this.teacherService = teacherService;
+        this.teacherAddingFormValidator = teacherAddingFormValidator;
+        this.subjectService = subjectService;
+    }
 
     @InitBinder("teacherAddingForm")
     public void initUserFormValidator(WebDataBinder binder) {
@@ -47,6 +53,7 @@ public class AdminTeacherController {
         if (isSA != null){
             model.addAttribute("isSuccessfullyAdded",Boolean.parseBoolean(isSA));
         }
+        model.addAttribute("subjects", subjectService.getAll());
         return "admin/entities/teacher_add";
     }
     @PostMapping("/add")
