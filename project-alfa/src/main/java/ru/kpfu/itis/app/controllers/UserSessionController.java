@@ -8,10 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kpfu.itis.app.model.Exam;
-import ru.kpfu.itis.app.services.ExamPostService;
-import ru.kpfu.itis.app.services.ExamService;
-import ru.kpfu.itis.app.services.ManualService;
-import ru.kpfu.itis.app.services.SessionService;
+import ru.kpfu.itis.app.services.*;
 
 import java.util.List;
 
@@ -29,12 +26,14 @@ public class UserSessionController {
     private ExamService examService;
     private ExamPostService examPostService;
     private ManualService manualService;
+    private TutorService tutorService;
 
-    public UserSessionController(SessionService sessionService, ExamService examService, ExamPostService examPostService, ManualService manualService) {
+    public UserSessionController(TutorService tutorService,SessionService sessionService, ExamService examService, ExamPostService examPostService, ManualService manualService) {
         this.sessionService = sessionService;
         this.examService = examService;
         this.examPostService = examPostService;
         this.manualService = manualService;
+        this.tutorService = tutorService;
     }
 
     @GetMapping("")
@@ -46,7 +45,9 @@ public class UserSessionController {
 
     @GetMapping("/exam/{id}")
     public String getExamPage(@ModelAttribute("model") ModelMap model, @PathVariable("id") Long examId) {
-        model.addAttribute("exam", examService.getExamById(examId));
+        Exam exam = examService.getExamById(examId);
+        model.addAttribute("exam", exam);
+      model.addAttribute("tutors",tutorService.getTutorsBySubject(exam.getSubject()));
         model.addAttribute("manuals", manualService.getUserManualsByExamIdAndCount(examId, 5));
         return "exam-page";
     }

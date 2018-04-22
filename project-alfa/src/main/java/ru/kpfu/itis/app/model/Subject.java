@@ -24,4 +24,12 @@ public class Subject {
     private Long id;
 
     private String name;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "subject_tutor",
+            joinColumns = @JoinColumn(name = "subject_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "tutor_id", referencedColumnName = "id")
+    )
+    private List<Tutor> tutors;
 }
