@@ -127,6 +127,17 @@
             </#list>
         </div>
     </div>
+
+    <hr>
+
+    <h2>Тьюторы</h2>
+    <#list model.tutors as tutor>
+        <div class="row">
+            <h3>${tutor.name}</h3>
+        ${tutor.contacts}
+        </div>
+    </#list>
+
 </div>
 
 <#else>

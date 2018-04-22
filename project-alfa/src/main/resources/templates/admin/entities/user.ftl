@@ -51,7 +51,6 @@
 
 <div class="container">
     <div class="key-form">
-        <h3>Добавление института</h3>
 
         <form method="post" action="/admin/users/${model.user.id}/edit" class="">
 
