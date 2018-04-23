@@ -109,6 +109,11 @@
                             <div class="clearfix"></div>
                         </div>
                     </div>
+                    <div>
+                        <button onclick="sendReport(${comment.id})">
+                            report
+                        </button>
+                    </div>
                 </div>
             </#list>
         </div>
@@ -271,6 +276,23 @@
                 '<p><strong>кажется, у нас проблемы!</strong> ' + message + '</p>' +
                 '</div>'
         );
+    }
+
+    function sendReport(commentId) {
+               $.ajax({
+            url: '/api/report/comment/'+commentId,
+            type: 'POST',
+            dataType: 'text',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                alert(data);
+            },
+            error: function () {
+                createAlertMessage("сервер едва дышит. извините, попробуйте позже");
+                console.log('sendReport method error')
+            }
+        })
     }
 </script>
 </html>

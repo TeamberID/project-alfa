@@ -4,9 +4,11 @@ import com.google.common.collect.Lists;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ru.kpfu.itis.app.controllers.rest.ReportController;
 import ru.kpfu.itis.app.dto.ExamPostDto;
 import ru.kpfu.itis.app.forms.ExamPostAddingForm;
 import ru.kpfu.itis.app.model.*;
+import ru.kpfu.itis.app.model.status.PostStatus;
 import ru.kpfu.itis.app.repositories.ExamPostsRepository;
 import ru.kpfu.itis.app.repositories.ExamsRepository;
 import ru.kpfu.itis.app.services.AuthenticationService;
@@ -85,5 +87,21 @@ public class ExamPostServiceImpl implements ExamPostService {
     @Override
     public ExamPost getExamPost(Long examPostId) {
         return examPostRepository.findOne(examPostId);
+    }
+
+    @Override
+    public void incReportsNumber(Long id) {
+        ExamPost examPost = examPostRepository.findOne(id);
+        examPost.setReports(examPost.getReports()+1);
+        if (examPost.getReports() >= ReportController.NUMBER_OF_REPORTS_TO_DELETE){
+            delete(examPost.getId());
+        }
+        examPostRepository.save(examPost);
+    }
+
+    private void delete(Long id) {
+       ExamPost examPost =  examPostRepository.findOne(id);
+       examPost.setState(PostStatus.DELETED);
+       examPostRepository.save(examPost);
     }
 }

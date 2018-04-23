@@ -17,4 +17,6 @@ public interface ExamPostService {
     List<ExamPostDto> getAllDtoByExamId(Long examId);
 
     ExamPost getExamPost(Long examPostId);
+
+    void incReportsNumber(Long id);
 }

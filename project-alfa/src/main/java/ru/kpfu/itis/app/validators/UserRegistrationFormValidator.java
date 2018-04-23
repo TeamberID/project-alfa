@@ -8,7 +8,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import ru.kpfu.itis.app.forms.UserRegistrationForm;
 import ru.kpfu.itis.app.model.RegistrationKey;
-import ru.kpfu.itis.app.model.RegistrationKeyStatus;
+import ru.kpfu.itis.app.model.status.RegistrationKeyStatus;
 import ru.kpfu.itis.app.model.UserData;
 import ru.kpfu.itis.app.repositories.RegistrationKeyRepository;
 import ru.kpfu.itis.app.repositories.UserDataRepository;

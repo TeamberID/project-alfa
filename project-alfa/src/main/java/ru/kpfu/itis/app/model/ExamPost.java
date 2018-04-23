@@ -1,6 +1,7 @@
 package ru.kpfu.itis.app.model;
 
 import lombok.*;
+import ru.kpfu.itis.app.model.status.PostStatus;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -42,4 +43,9 @@ public class ExamPost {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "examPost", cascade = CascadeType.PERSIST)
     private List<ExamPostFile> attachments;
+
+    private Integer reports;
+
+    @Enumerated(EnumType.STRING)
+    private PostStatus state;
 }

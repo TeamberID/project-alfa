@@ -52,6 +52,11 @@
                 <div class="clearfix"></div>
             </div>
         </div>
+        <div>
+            <button onclick="sendReportOnPost(${model.post.id})">
+                report
+            </button>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-6">
@@ -99,6 +104,12 @@
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <button onclick="sendReport(${comment.id})">
+                            report
+                        </button>
+                    </div>
+
                 </#list>
             </div>
             <div id="post-form-alert"></div>
@@ -203,6 +214,40 @@
             );
         }
     }
+
+    function sendReport(commentId) {
+        $.ajax({
+            url: '/api/report/comment/'+commentId,
+            type: 'POST',
+            dataType: 'text',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                alert(data);
+            },
+            error: function () {
+                createAlertMessage("сервер едва дышит. извините, попробуйте позже");
+                console.log('sendReport method error')
+            }
+        })
+    }
+    function sendReportOnPost(postId) {
+        $.ajax({
+            url: '/api/report/exam-post/'+postId,
+            type: 'POST',
+            dataType: 'text',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                alert(data);
+            },
+            error: function () {
+                createAlertMessage("сервер едва дышит. извините, попробуйте позже");
+                console.log('sendReport method error')
+            }
+        })
+    }
+
 </script>
 </body>
 </html>

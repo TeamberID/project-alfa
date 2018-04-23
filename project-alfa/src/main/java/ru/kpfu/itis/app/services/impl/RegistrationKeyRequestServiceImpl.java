@@ -3,6 +3,7 @@ package ru.kpfu.itis.app.services.impl;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.app.forms.RegistrationKeyRequestForm;
 import ru.kpfu.itis.app.model.*;
+import ru.kpfu.itis.app.model.status.RegistrationKeyRequestStatus;
 import ru.kpfu.itis.app.repositories.InstitutesRepository;
 import ru.kpfu.itis.app.repositories.RegistrationKeyRepository;
 import ru.kpfu.itis.app.repositories.RegistrationKeyRequestRepository;

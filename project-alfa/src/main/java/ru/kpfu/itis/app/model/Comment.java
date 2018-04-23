@@ -1,6 +1,7 @@
 package ru.kpfu.itis.app.model;
 
 import lombok.*;
+import ru.kpfu.itis.app.model.status.CommentStatus;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -31,6 +32,11 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private User author;
+
+    private Integer reports;
+
+    @Enumerated(EnumType.STRING)
+    private CommentStatus status;
 
     @Column(length = 300)
     private String text;

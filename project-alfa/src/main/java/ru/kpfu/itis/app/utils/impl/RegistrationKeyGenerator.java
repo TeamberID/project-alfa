@@ -3,7 +3,7 @@ package ru.kpfu.itis.app.utils.impl;
 import org.springframework.stereotype.Component;
 import ru.kpfu.itis.app.model.RegistrationKey;
 import ru.kpfu.itis.app.model.RegistrationKeyRequest;
-import ru.kpfu.itis.app.model.RegistrationKeyStatus;
+import ru.kpfu.itis.app.model.status.RegistrationKeyStatus;
 import ru.kpfu.itis.app.utils.KeyGenerator;
 
 import java.util.ArrayList;

@@ -2,7 +2,7 @@ package ru.kpfu.itis.app.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.kpfu.itis.app.model.RegistrationKeyRequest;
-import ru.kpfu.itis.app.model.RegistrationKeyRequestStatus;
+import ru.kpfu.itis.app.model.status.RegistrationKeyRequestStatus;
 
 import java.util.List;
 
