@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import ru.kpfu.itis.app.model.*;
+import ru.kpfu.itis.app.services.impl.AmazonClient;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -18,6 +19,8 @@ import java.util.UUID;
 @Component
 public class FileStorageUtil {
 
+    private AmazonClient amazonClient;
+
     @Value("${storage.path.doc}")
     private String docsStoragePath;
 
@@ -29,6 +32,10 @@ public class FileStorageUtil {
 
     @Value("${storage.path.doc}")
     private String manualStoragePath;
+
+    public FileStorageUtil(AmazonClient amazonClient) {
+        this.amazonClient = amazonClient;
+    }
 
     public FileInfo getDocFileInfoByMultipart(MultipartFile file) {
         FileInfo fileInfo = convertFromMultipart(file);
@@ -85,22 +92,26 @@ public class FileStorageUtil {
 
     @SneakyThrows
     public void saveDocumentImageToStorage(MultipartFile file, Image documentImage) {
-        Files.copy(file.getInputStream(), Paths.get(docsStoragePath, documentImage.getFileInfo().getStorageFileName()));
+        String fileUrl = amazonClient.saveFileToStorage(file, documentImage.getFileInfo().getStorageFileName());
+        documentImage.getFileInfo().setUrl(fileUrl);
     }
 
     @SneakyThrows
     public void saveExamPostFileToStorage(MultipartFile file, ExamPostFile examPostFile) {
-        Files.copy(file.getInputStream(), Paths.get(docsStoragePath, examPostFile.getFileInfo().getStorageFileName()));
+        String fileUrl = amazonClient.saveFileToStorage(file, examPostFile.getFileInfo().getStorageFileName());
+        examPostFile.getFileInfo().setUrl(fileUrl);
     }
 
     @SneakyThrows
     public void saveTeacherPhotoToStorage(MultipartFile file, TeacherPhoto teacherPhoto) {
-        Files.copy(file.getInputStream(), Paths.get(docsStoragePath, teacherPhoto.getFileInfo().getStorageFileName()));
+        String fileUrl = amazonClient.saveFileToStorage(file, teacherPhoto.getFileInfo().getStorageFileName());
+        teacherPhoto.getFileInfo().setUrl(fileUrl);
     }
 
     @SneakyThrows
     public void saveManualToStorage(MultipartFile file, Manual manual) {
-        Files.copy(file.getInputStream(), Paths.get(manualStoragePath, manual.getFileInfo().getStorageFileName()));
+        String fileUrl = amazonClient.saveFileToStorage(file, manual.getFileInfo().getStorageFileName());
+        manual.getFileInfo().setUrl(fileUrl);
     }
 
     private String createStorageFileName(String originalFileName) {

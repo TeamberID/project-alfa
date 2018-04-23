@@ -36,7 +36,7 @@
     <h2>${model.teacher.name}</h2>
     <div class="row">
         <div class="col-md-3">
-            <img src="/file/${model.teacher.photo.fileInfo.id}" class="img-thumbnail img-responsive" alt="Your Teacher is Watching You!" width="200" height="300">
+            <img src="${model.teacher.photo.fileInfo.url}" class="img-thumbnail img-responsive" alt="Your Teacher is Watching You!" width="200" height="300">
         </div>
         <div class="col-md-3">
             <div class="teacher-subject">

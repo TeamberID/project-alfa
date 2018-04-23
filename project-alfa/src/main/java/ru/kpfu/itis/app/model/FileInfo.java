@@ -35,4 +35,6 @@ public class FileInfo {
     private String type;
 
     private String path;
+
+    private String url;
 }

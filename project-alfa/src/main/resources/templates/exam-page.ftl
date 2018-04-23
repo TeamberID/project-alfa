@@ -40,7 +40,7 @@
             <div class="col-md-6">
                 <h4>принимать экзамен у вас будет:</h4>
                 <a href="/user/teachers/${model.exam.teacher.id}"><h3 style="font-weight: bold">${model.exam.teacher.name}</h3></a>
-                <img src="/file/${model.exam.teacher.photo.fileInfo.id}" class="img-thumbnail img-responsive" alt="Your Teacher is Watching You!" width="200" height="400">
+                <img src="${model.exam.teacher.photo.fileInfo.url}" class="img-thumbnail img-responsive" alt="Your Teacher is Watching You!" width="200" height="400">
             </div>
             <div class="col-md-6">
                 <h4>дидактические материалы:</h4>
@@ -57,7 +57,7 @@
                     <tr>
                         <td>${manual.title}</td>
                         <td>${manual.author}</td>
-                        <td><a href="/file/${manual.fileInfo.id}" class="btn btn-default" role="button" download><span class="glyphicon glyphicon-download"></span></a></td>
+                        <td><a href="${manual.fileInfo.url}" class="btn btn-default" role="button" download><span class="glyphicon glyphicon-download"></span></a></td>
                     </tr>
                     </#list>
                     </tbody>
