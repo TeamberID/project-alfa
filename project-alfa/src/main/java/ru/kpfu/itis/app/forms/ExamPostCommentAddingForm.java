@@ -19,6 +19,6 @@ import javax.validation.constraints.Size;
 public class ExamPostCommentAddingForm {
     private Long examPostId;
 
-    @Size(max = 250)
+    @Size(max = 300)
     private String text;
 }
