@@ -1,6 +1,7 @@
 package ru.kpfu.itis.app.model;
 
 import lombok.*;
+import ru.kpfu.itis.app.model.status.RegistrationKeyStatus;
 
 import javax.persistence.*;
 

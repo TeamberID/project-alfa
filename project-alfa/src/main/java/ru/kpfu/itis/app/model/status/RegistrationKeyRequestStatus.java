@@ -1,4 +1,4 @@
-package ru.kpfu.itis.app.model;
+package ru.kpfu.itis.app.model.status;
 
 /**
  * Created by Melnikov Semen

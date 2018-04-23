@@ -1,3 +1,5 @@
+
+
 INSERT INTO university(name)
     SELECT 'Admin University'
     WHERE NOT EXISTS(
@@ -77,3 +79,4 @@ CREATE TABLE IF NOT EXISTS persistent_logins (
   last_used TIMESTAMP NOT NULL,
   PRIMARY KEY (series)
 );
+
