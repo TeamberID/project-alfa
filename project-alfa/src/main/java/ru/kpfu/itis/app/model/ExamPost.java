@@ -47,5 +47,5 @@ public class ExamPost {
     private Integer reports;
 
     @Enumerated(EnumType.STRING)
-    private PostStatus state;
+    private PostStatus status;
 }

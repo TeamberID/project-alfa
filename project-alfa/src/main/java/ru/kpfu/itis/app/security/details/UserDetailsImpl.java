@@ -40,7 +40,14 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
+        if (UserStatus.DELETED.equals(user.getUserStatus())){
+            return false;
+        }
+        if (UserStatus.BANNED.equals(user.getUserStatus())){
+            return false;
+        }
         return true;
+
     }
 
     @Override

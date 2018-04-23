@@ -101,7 +101,7 @@ public class ExamPostServiceImpl implements ExamPostService {
 
     private void delete(Long id) {
        ExamPost examPost =  examPostRepository.findOne(id);
-       examPost.setState(PostStatus.DELETED);
+       examPost.setStatus(PostStatus.DELETED);
        examPostRepository.save(examPost);
     }
 }

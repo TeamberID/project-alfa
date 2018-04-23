@@ -53,8 +53,8 @@ public class UserDatasServiceImpl implements UserDatasService {
 
     @Override
     public void delete(Long id) {
-        Long userId = userDatasRepository.findOne(id).getUser().getId();
-        userDatasRepository.delete(id);
-        usersRepository.delete(userId);
+        UserData userData = userDatasRepository.findOne(id);
+        userData.setUserStatus(UserStatus.DELETED);
+        userDatasRepository.save(userData);
     }
 }
