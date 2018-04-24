@@ -80,3 +80,5 @@ CREATE TABLE IF NOT EXISTS persistent_logins (
   PRIMARY KEY (series)
 );
 
+INSERT INTO tutor VALUES (1,'88005553535','Mavro'), (2,'fasthelp@mail.ru','Dre');
+INSERT INTO subject_tutor VALUES (4,1), (3,2);
