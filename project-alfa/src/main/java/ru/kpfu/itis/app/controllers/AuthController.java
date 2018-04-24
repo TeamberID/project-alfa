@@ -21,8 +21,9 @@ public class AuthController {
     @GetMapping("/login")
     public String login(@ModelAttribute("loginModel") ModelMap model, Authentication authentication,
                         @RequestParam Optional<String> error) {
+
         if (authentication != null) {
-            return "redirect:/user/profile";
+            return "redirect:" + service.defineDefaultURL(authentication);
         }
         model.addAttribute("loginError", error);
         return "entry-page";
@@ -39,7 +40,7 @@ public class AuthController {
     @GetMapping("/")
     public String root(Authentication authentication) {
         if (authentication != null) {
-            return "redirect:/user/profile";
+            return "redirect:" + service.defineDefaultURL(authentication);
         }
         return "redirect:/login";
     }
