@@ -28,6 +28,6 @@ public class Tutor {
     @Column
     private String contacts;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST,mappedBy = "tutors")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tutors")
     private List<Subject> subjects;
 }

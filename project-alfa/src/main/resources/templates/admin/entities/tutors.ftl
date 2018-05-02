@@ -37,21 +37,24 @@
 <br><br><br>
 
 <h4>
-    <a href="/admin/teachers/add" class ="addbutton">Добавить</a>
+    <a href="/admin/tutors/add" class ="addbutton">Добавить</a>
 </h4>
 
 <table>
     <tr>
         <th>Id</th>
         <th>Name</th>
-        <th></th>
+        <th>Contacts</th>
+        <th>Action</th>
     </tr>
-<#list model.teachers as teacher>
+<#list model.tutors as tutor>
     <tr>
-        <td>${teacher.id}</td>
-        <td>${teacher.name}</td>
+        <td>${tutor.id}</td>
+        <td>${tutor.name}</td>
+        <td>${tutor.contacts}</td>
+
         <td>
-            <form method="post" action="/admin/teachers/${teacher.id}/delete">
+            <form method="post" action="/admin/tutors/${tutor.id}/delete">
                 <button class = "option">delete</button>
             </form>
         </td>

@@ -45,6 +45,7 @@
         <th>Institute</th>
         <th>Course</th>
         <th>Group</th>
+        <th>Role</th>
         <th></th>
         <th></th>
     </tr>
@@ -58,6 +59,7 @@
         <td>${user.user.university.name} ${user.user.institute.name}</td>
         <td>${user.user.course}</td>
         <td> - </td>
+        <td>${user.role}</td>
         <td>
             <form method="get" action="/admin/users/${user.id}">
             <button class = "option">edit</button>
@@ -68,10 +70,6 @@
                 <button class = "option">delete</button>
             </form>
         </td>
-
-    <#--
-            <td>${user.user.group}</td>
-    -->
     </tr>
 </#list>
 </table>
