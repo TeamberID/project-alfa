@@ -72,9 +72,6 @@
                 <button class = "option">delete</button>
             </form>
         </td>
-    <#--
-            <td>${user.user.group}</td>
-    -->
     </tr>
 </#list>
 </table>
