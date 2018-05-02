@@ -12,11 +12,11 @@ import java.util.List;
  * Created by Timur Iderisov on 22.04.2018.
  */
 @Service
-public class TutorServiceImpl  implements TutorService{
+public class TutorServiceImpl implements TutorService {
 
     private TutorRepository tutorRepository;
 
-    public TutorServiceImpl(TutorRepository tutorRepository){
+    public TutorServiceImpl(TutorRepository tutorRepository) {
         this.tutorRepository = tutorRepository;
     }
 
@@ -32,6 +32,10 @@ public class TutorServiceImpl  implements TutorService{
 
     @Override
     public List<Tutor> getTutorsBySubject(Subject subject) {
-        return tutorRepository.findAllBySubjects(subject);
+        List<Tutor> tutors = tutorRepository.findAllBySubjects(subject);
+        if(tutors.isEmpty()){
+            return null;
+        }
+        return tutors;
     }
 }
