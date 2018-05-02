@@ -47,7 +47,7 @@ public class UserSessionController {
     public String getExamPage(@ModelAttribute("model") ModelMap model, @PathVariable("id") Long examId) {
         Exam exam = examService.getExamById(examId);
         model.addAttribute("exam", exam);
-      model.addAttribute("tutors",tutorService.getTutorsBySubject(exam.getSubject()));
+        model.addAttribute("tutors",tutorService.getTutorsBySubject(exam.getSubject()));
         model.addAttribute("manuals", manualService.getUserManualsByExamIdAndCount(examId, 5));
         return "exam-page";
     }
