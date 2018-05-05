@@ -9,6 +9,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.kpfu.itis.app.forms.TeacherAddingForm;
 import ru.kpfu.itis.app.services.SubjectService;
 import ru.kpfu.itis.app.services.TeacherService;
+import ru.kpfu.itis.app.utils.AmazonClient;
 import ru.kpfu.itis.app.validators.TeacherAddingFormValidator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,10 +29,13 @@ public class AdminTeacherController {
 
     private SubjectService subjectService;
 
-    public AdminTeacherController(TeacherService teacherService, TeacherAddingFormValidator teacherAddingFormValidator, SubjectService subjectService) {
+    private AmazonClient amazonClient;
+
+    public AdminTeacherController(TeacherService teacherService, TeacherAddingFormValidator teacherAddingFormValidator, SubjectService subjectService, AmazonClient amazonClient) {
         this.teacherService = teacherService;
         this.teacherAddingFormValidator = teacherAddingFormValidator;
         this.subjectService = subjectService;
+        this.amazonClient = amazonClient;
     }
 
     @InitBinder("teacherAddingForm")
@@ -51,8 +55,9 @@ public class AdminTeacherController {
         model.addAttribute("teachers",teacherService.getAll());
         String isSA = req.getParameter("isSuccessfullyAdded");
         if (isSA != null){
-            model.addAttribute("isSuccessfullyAdded",Boolean.parseBoolean(isSA));
+            model.addAttribute("isSuccessfullyAdded", Boolean.parseBoolean(isSA));
         }
+        model.addAttribute("credentials", amazonClient.getCredentials());
         model.addAttribute("subjects", subjectService.getAll());
         return "admin/entities/teacher_add";
     }

@@ -1,7 +1,6 @@
 package ru.kpfu.itis.app.forms;
 
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,6 +16,6 @@ import java.util.List;
 @ToString
 public class TeacherAddingForm {
     private String name;
-    private MultipartFile photo;
+    private String teacherPhotoStorageName;
     private List<Long> subjectsId;
 }

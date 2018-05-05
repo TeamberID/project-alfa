@@ -10,6 +10,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.SneakyThrows;
+import org.apache.commons.codec.binary.Hex;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,11 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by Melnikov Semen
@@ -56,11 +62,8 @@ public class AmazonClient {
     @Value("${amazonProperties.amzAlgorithm}")
     private String amzAlgorithm;
 
-    @Value("${amazonProperties.amzDate}")
-    private String amzDate;
-
-    @Value("${amazonProperties.amzCredentialTail}")
-    private String amzCredentialTail;
+    @Value("${amazonProperties.region}")
+    private String region;
 
     @PostConstruct
     private void initializeAmazon() {
@@ -75,10 +78,13 @@ public class AmazonClient {
     public AmazonFormCredentials getCredentials() {
         String key = "";
         String contentType = "multipart/form-data";
-        String amzCredential = accessKey + amzCredentialTail;
+        Date currentDate = new Date();
 
-        String policy = createPolicy(key, contentType, amzCredential);
-        String signature = createSignature(policy);
+        String amzCredential = createS3AmzCredential(currentDate);
+        String amzDate = createAmzDate(currentDate);
+
+        String policy = createPolicy(key, contentType, amzCredential, amzDate);
+        String signature = createSignature(policy, getShortDateStringForDate(currentDate));
         String serverUrl = createServerUrl();
 
         return AmazonFormCredentials.builder()
@@ -95,6 +101,27 @@ public class AmazonClient {
                 .serverUrl(serverUrl)
                 .build();
     }
+
+    private String createAmzDate(Date date) {
+        return getISO8601StringForDate(date);
+    }
+
+    private String createS3AmzCredential(Date date) {
+        return accessKey + "/" + getShortDateStringForDate(date) + "/" + region + "/s3/aws4_request";
+    }
+
+    private String getShortDateStringForDate(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.US);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return dateFormat.format(date);
+    }
+
+    private String getISO8601StringForDate(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'", Locale.US);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return dateFormat.format(date);
+    }
+
 
     public String saveFileToStorage(MultipartFile multipartFile, String fileName) {
         String fileUrl = "";
@@ -115,7 +142,7 @@ public class AmazonClient {
     }
 
     @SneakyThrows
-    private String createPolicy(String key, String contentType, String amzCredential) {
+    private String createPolicy(String key, String contentType, String amzCredential, String amzDate) {
         String rawPolicy =  "{ \"expiration\": \"" + expirationDate + "\",\n" +
                 "  \"conditions\": [\n" +
                 "    {\"bucket\": \"" + bucketName + "\"},\n" +
@@ -138,10 +165,25 @@ public class AmazonClient {
     }
 
     @SneakyThrows
-    private String createSignature(String policy) {
-        Mac hmac = Mac.getInstance("HmacSHA256");
-        hmac.init(new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256"));
-        return (new BASE64Encoder()).encode(hmac.doFinal(policy.getBytes("UTF-8"))).replaceAll("\n", "");
+    private String createSignature(String policy, String shortDate) {
+        byte[] signingKey = getSignatureKey(secretKey, shortDate, region, "s3");
+        byte[] rawSignature = hmacSHA256(policy, signingKey);
+        return Hex.encodeHexString(rawSignature);
+    }
+
+    private byte[] getSignatureKey(String key, String dateStamp, String regionName, String serviceName) throws Exception {
+        byte[] kSecret = ("AWS4" + key).getBytes("UTF8");
+        byte[] kDate = hmacSHA256(dateStamp, kSecret);
+        byte[] kRegion = hmacSHA256(regionName, kDate);
+        byte[] kService = hmacSHA256(serviceName, kRegion);
+        return hmacSHA256("aws4_request", kService);
+    }
+
+    private byte[] hmacSHA256(String data, byte[] key) throws Exception {
+        String algorithm="HmacSHA256";
+        Mac mac = Mac.getInstance(algorithm);
+        mac.init(new SecretKeySpec(key, algorithm));
+        return mac.doFinal(data.getBytes("UTF8"));
     }
 
     private void deleteFileFromS3Bucket(String fileName) {
@@ -162,5 +204,13 @@ public class AmazonClient {
         fos.write(file.getBytes());
         fos.close();
         return convFile;
+    }
+
+    public String getEndpointUrl() {
+        return endpointUrl;
+    }
+
+    public String getBucketName() {
+        return bucketName;
     }
 }

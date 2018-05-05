@@ -127,4 +127,8 @@ public class FileStorageUtil {
     public void removeFileFromStorage(FileInfo fileInfo) {
         Files.delete(Paths.get(fileInfo.getPath()));
     }
+
+    public String getBucketURL() {
+        return amazonClient.getEndpointUrl() + "/" + amazonClient.getBucketName();
+    }
 }
