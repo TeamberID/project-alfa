@@ -68,7 +68,7 @@
                         <#else >
                         <div class="item">
                         </#if>
-                            <img src="${image.fileInfo.url}">
+                            <img src="${image.url}">
                         </div>
                     </#list>
                 </div>

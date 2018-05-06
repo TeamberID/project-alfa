@@ -55,7 +55,7 @@
         <div class="row">
             <div class="col-md-3">
                 <h3>${currentRequest.surname} ${currentRequest.name}</h3>
-                <img src="/file/${currentRequest.documentImage.fileInfo.id}" class="pull-left" height="auto" width="300"/>
+                <img src="${currentRequest.documentImage.url}" class="pull-left" height="auto" width="300"/>
             </div>
             <div class="col-md-4">
                 <p>University: ${currentRequest.university.name}</p>
@@ -114,30 +114,30 @@
             var currentRequest = data[i];
             $("#requests-list-group").append(
                     '<li class="list-group-item">' +
-                    '<div class="row">' +
-                    '<div class="col-md-3">' +
-                    '<h3>' + currentRequest.surname + ' ' + currentRequest.name + '</h3>' +
-                    '<img src="/file/' + currentRequest.documentImage.fileInfo.id + '" class="pull-left" height="auto" width="300"/>' +
-                    '</div>' +
-                    '<div class="col-md-4">' +
-                    '<p>University: ' + currentRequest.university + '</p>' +
-                    '<p>Institute: ' + currentRequest.institute + '</p>' +
-                    '<p>Course: ' + currentRequest.course + '</p>' +
-                    '<p>Group: ' + currentRequest.group + '</p>' +
-                    '</div>' +
-                    '<div class="col-md-4">' +
-                    '<p>Email: ' + currentRequest.email + '</p>' +
-                    '<p>Count: ' + currentRequest.countOfKey + '</p>' +
-                    '</div>' +
-                    '<div class="col-md-1">' +
-                    '<button class="btn btn-success" onclick="acceptRequest(' + currentRequest.id+ ')">' +
-                    'Accept' +
-                    '</button>' +
-                    '<button class="btn btn-danger" onclick="denyRequest(' + currentRequest.id+ ')">' +
-                    'Deny' +
-                    '</button>' +
-                    '</div>' +
-                    '</div>' +
+                        '<div class="row">' +
+                            '<div class="col-md-3">' +
+                                '<h3>' + currentRequest.surname + ' ' + currentRequest.name + '</h3>' +
+                                '<img src="/file/' + currentRequest.documentImage.url + '" class="pull-left" height="auto" width="300"/>' +
+                            '</div>' +
+                            '<div class="col-md-4">' +
+                                '<p>University: ' + currentRequest.university + '</p>' +
+                                '<p>Institute: ' + currentRequest.institute + '</p>' +
+                                '<p>Course: ' + currentRequest.course + '</p>' +
+                                '<p>Group: ' + currentRequest.group + '</p>' +
+                            '</div>' +
+                            '<div class="col-md-4">' +
+                                '<p>Email: ' + currentRequest.email + '</p>' +
+                                '<p>Count: ' + currentRequest.countOfKey + '</p>' +
+                            '</div>' +
+                            '<div class="col-md-1">' +
+                                '<button class="btn btn-success" onclick="acceptRequest(' + currentRequest.id+ ')">' +
+                                    'Accept' +
+                                '</button>' +
+                                '<button class="btn btn-danger" onclick="denyRequest(' + currentRequest.id+ ')">' +
+                                    'Deny' +
+                                '</button>' +
+                            '</div>' +
+                        '</div>' +
                     '</li>'
             );
         }
