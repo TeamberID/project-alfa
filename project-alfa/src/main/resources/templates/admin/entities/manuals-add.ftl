@@ -106,6 +106,8 @@
         if (isDataValid()) {
             var manualStorageName = generateManualStorageName();
             uploadManualDataToServer(manualStorageName);
+        } else {
+            createMessage("Проверьте заполненность полей и попробуйте снова.", "danger");
         }
     }
 

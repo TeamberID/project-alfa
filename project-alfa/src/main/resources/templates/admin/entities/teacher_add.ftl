@@ -111,6 +111,8 @@
         if (isDataValid()) {
             var teacherPhotoStorageName = generateTeacherPhotoStorageName();
             uploadTeacherDataToServer(teacherPhotoStorageName)
+        } else {
+            createMessage("Проверьте заполненность полей и попробуйте снова.", "danger");
         }
     }
 
