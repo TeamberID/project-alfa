@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.kpfu.itis.app.forms.TeacherAddingForm;
 import ru.kpfu.itis.app.services.TeacherService;
 
+import javax.validation.Valid;
+
 /**
  * Created by Melnikov Semen
  * 11-601 ITIS KPFU
@@ -20,8 +22,8 @@ public class TeacherRestController {
         this.teacherService = teacherService;
     }
 
-    @PostMapping("/admin/teachers")
-    public void addTeacher(@ModelAttribute TeacherAddingForm form) {
+    @PostMapping("/admin/teachers/add")
+    public void addTeacher(@Valid @ModelAttribute TeacherAddingForm form) {
         teacherService.add(form);
     }
 }

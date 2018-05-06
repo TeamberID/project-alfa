@@ -13,7 +13,7 @@
     <div class="container-fluid" style="color: #9acfea">
         <div class="navbar-header">
             <div class="navbar-brand">
-                <a href="/admin/teachers"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+                <a href="/admin/teachers/"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
             </div>
 
             <div class="navbar-brand">
@@ -51,7 +51,8 @@
     <div class="key-form">
         <h3>Добавление преподавателя</h3>
 
-        <form id="teacher-data-form" method="post" action="/admin/teachers/add" class="" enctype="multipart/form-data">
+        <div id="teacher-alert"></div>
+        <form id="teacher-data-form">
             <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
@@ -128,7 +129,7 @@
         var form = $('#teacher-data-form')[0];
         var data = new FormData(form);
         $.ajax({
-            url: '/admin/teachers',
+            url: '/admin/teachers/add',
             type: 'POST',
             enctype: 'multipart/form-data',
             data: data,
@@ -137,9 +138,11 @@
             success: function () {
                 uploadTeacherPhotoToStorage(teacherPhotoStorageName);
                 resetForms();
+                createMessage("Преподаватель успешно добавлен в систему!", "success");
             },
             error: function () {
-                console.log('uploadTeacherDataToServer method error')
+                createMessage("При загрузке данных произошла ошибка. Проверьте заполненность полей и попробуйте снова.", "danger");
+                console.log('uploadTeacherDataToServer method error');
             }
         })
     }
@@ -154,6 +157,20 @@
     function resetForms() {
         $('#teacher-data-form')[0].reset();
         $('#teacher-photo-form')[0].reset();
+    }
+
+    function createMessage(message, type) {
+        clearMessage();
+        $("#teacher-alert").append(
+                '<div class="alert alert-' + type + ' alert-dismissible">' +
+                '<a class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+                '<p>' + message + '</p>' +
+                '</div>'
+        );
+    }
+
+    function clearMessage() {
+        $("#teacher-alert").html("");
     }
 
 </script>
