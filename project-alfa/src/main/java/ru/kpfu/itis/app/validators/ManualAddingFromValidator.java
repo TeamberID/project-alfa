@@ -32,7 +32,7 @@ public class ManualAddingFromValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "empty.title", "Пустой заголовок");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "author", "empty.author", "Пустой автор");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "file", "empty.file", "Пустой файл");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "fileStorageName", "empty.fileStorageName", "Пустой файл");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "examId", "empty.examId", "Пустой идентификатор экзамена");
 
         Exam exam = examService.getExamById(form.getExamId());

@@ -37,7 +37,7 @@ public class RegistrationKeyRequestFormValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         RegistrationKeyRequestForm form = (RegistrationKeyRequestForm) o;
-        if (form.getDocumentImageMultipartFile() == null) {
+        if (form.getDocumentStorageName() == null) {
             errors.reject("empty.documentImage", "Document image is empty. Please, fix it, because we have to check you.");
         }
         if (!checkUniAndInstitute(form.getUniversityId(), form.getInstituteId())) {
@@ -51,6 +51,7 @@ public class RegistrationKeyRequestFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "instituteId", "invalid.instituteId", "Check 'institute' field. Is it empty?");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "course", "invalid.course", "Check 'course' field. Is it empty?");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "group", "invalid.group", "Check 'group' field. Is it empty?");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "documentStorageName", "invalid.documentStorageName", "Check 'file' field. Is it empty?");
     }
 
     private boolean checkUniAndInstitute(Long universityId, Long instituteId) {
