@@ -2,7 +2,6 @@ package ru.kpfu.itis.app.dto;
 
 import lombok.*;
 import ru.kpfu.itis.app.model.ExamPostFile;
-import ru.kpfu.itis.app.model.FileInfo;
 
 /**
  * Created by Melnikov Semen
