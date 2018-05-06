@@ -3,11 +3,13 @@ package ru.kpfu.itis.app.services.impl;
 import com.google.common.collect.Lists;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import ru.kpfu.itis.app.controllers.rest.ReportController;
 import ru.kpfu.itis.app.dto.ExamPostDto;
 import ru.kpfu.itis.app.forms.ExamPostAddingForm;
-import ru.kpfu.itis.app.model.*;
+import ru.kpfu.itis.app.model.Exam;
+import ru.kpfu.itis.app.model.ExamPost;
+import ru.kpfu.itis.app.model.ExamPostFile;
+import ru.kpfu.itis.app.model.User;
 import ru.kpfu.itis.app.model.status.PostStatus;
 import ru.kpfu.itis.app.repositories.ExamPostsRepository;
 import ru.kpfu.itis.app.repositories.ExamsRepository;
@@ -51,26 +53,26 @@ public class ExamPostServiceImpl implements ExamPostService {
                 .exam(exam)
                 .comments(Collections.emptyList())
                 .build();
-        List<ExamPostFile> attachments = createExamPostAttachments(form.getFiles(), examPost);
+        List<ExamPostFile> attachments = createExamPostAttachments(form.getFileStorageNames(), examPost);
         examPost.setAttachments(attachments);
         examPostRepository.save(examPost);
     }
 
-    private List<ExamPostFile> createExamPostAttachments(MultipartFile[] files, ExamPost examPost) {
+    private List<ExamPostFile> createExamPostAttachments(String[] fileNames, ExamPost examPost) {
         List<ExamPostFile> attachments = Lists.newArrayList();
-        if (files != null) {
-            for (MultipartFile file: files) {
-                FileInfo fileInfo = fileStorageUtil.getExamPostInfoByMultipart(file);
-                if (fileInfo.getSize() != 0) {
-                    ExamPostFile examPostFile = ExamPostFile.builder().fileInfo(fileInfo).examPost(examPost).build();
+        if (fileNames != null) {
+            for (String fileName: fileNames) {
+                if (fileName.length() != 0) {
+                    ExamPostFile examPostFile = ExamPostFile.builder()
+                            .url(fileStorageUtil.getFileBucketUrl(fileName))
+                            .examPost(examPost)
+                            .build();
                     attachments.add(examPostFile);
-                    fileStorageUtil.saveExamPostFileToStorage(file, examPostFile);
                 }
             }
         }
         return attachments;
     }
-
 
     @Override
     public List<ExamPost> getAllByExamId(Long examId) {

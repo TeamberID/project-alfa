@@ -77,7 +77,7 @@ public class TeacherServiceImpl implements TeacherService {
                 .collect(Collectors.toList());
 
         TeacherPhoto teacherPhoto = TeacherPhoto.builder()
-                .url(fileStorageUtil.getBucketURL() + "/" + teacherAddingForm.getTeacherPhotoStorageName())
+                .url(fileStorageUtil.getFileBucketUrl(teacherAddingForm.getTeacherPhotoStorageName()))
                 .build();
 
         TeacherScore teacherScore = prepareStartedTeacherScore();

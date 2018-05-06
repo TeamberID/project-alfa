@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created by Melnikov Semen
@@ -18,6 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class ManualAddingForm {
     private String title;
     private String author;
-    private MultipartFile file;
+    private String fileStorageName;
     private Long examId;
 }

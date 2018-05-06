@@ -1,33 +1,14 @@
 package ru.kpfu.itis.app.utils;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.SneakyThrows;
-import org.apache.commons.codec.binary.Hex;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 import ru.kpfu.itis.app.model.AmazonFormCredentials;
-import sun.misc.BASE64Encoder;
 
-import javax.annotation.PostConstruct;
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
+import static ru.kpfu.itis.app.utils.Encoder.*;
+import static ru.kpfu.itis.app.utils.DateConverter.*;
 /**
  * Created by Melnikov Semen
  * 11-601 ITIS KPFU
@@ -35,8 +16,6 @@ import java.util.TimeZone;
 
 @Component
 public class AmazonClient {
-
-    private AmazonS3 s3client;
 
     @Value("${amazonProperties.endpointUrl}")
     private String endpointUrl;
@@ -65,15 +44,6 @@ public class AmazonClient {
     @Value("${amazonProperties.region}")
     private String region;
 
-    @PostConstruct
-    private void initializeAmazon() {
-        AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
-        s3client = AmazonS3ClientBuilder.standard()
-                .withCredentials(new AWSStaticCredentialsProvider(credentials))
-                .withRegion(Regions.US_EAST_2)
-                .build();
-    }
-
     @SneakyThrows
     public AmazonFormCredentials getCredentials() {
         String key = "";
@@ -84,7 +54,7 @@ public class AmazonClient {
         String amzDate = createAmzDate(currentDate);
 
         String policy = createPolicy(key, contentType, amzCredential, amzDate);
-        String signature = createSignature(policy, getShortDateStringForDate(currentDate));
+        String signature = createSignature(policy, createShortDate(currentDate));
         String serverUrl = createServerUrl();
 
         return AmazonFormCredentials.builder()
@@ -102,43 +72,12 @@ public class AmazonClient {
                 .build();
     }
 
+    private String createS3AmzCredential(Date date) {
+        return accessKey + "/" + createShortDate(date) + "/" + region + "/s3/aws4_request";
+    }
+
     private String createAmzDate(Date date) {
         return getISO8601StringForDate(date);
-    }
-
-    private String createS3AmzCredential(Date date) {
-        return accessKey + "/" + getShortDateStringForDate(date) + "/" + region + "/s3/aws4_request";
-    }
-
-    private String getShortDateStringForDate(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.US);
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        return dateFormat.format(date);
-    }
-
-    private String getISO8601StringForDate(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'", Locale.US);
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        return dateFormat.format(date);
-    }
-
-
-    public String saveFileToStorage(MultipartFile multipartFile, String fileName) {
-        String fileUrl = "";
-        try {
-            File file = convertMultiPartToFile(multipartFile);
-            fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
-            uploadFileToS3Bucket(fileName, file);
-            file.delete();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return fileUrl;
-    }
-
-    public void deleteFileFromStorage(String fileUrl) {
-        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
-        deleteFileFromS3Bucket(fileName);
     }
 
     @SneakyThrows
@@ -156,19 +95,14 @@ public class AmazonClient {
                 "    {\"x-amz-date\": \"" + amzDate + "\" }\n" +
                 "  ]\n" +
                 "}";
-        return (new BASE64Encoder()).encode(rawPolicy.getBytes("UTF-8")).replaceAll("\n", "").replaceAll("\r", "");
-
-    }
-
-    private String createServerUrl() {
-        return "http://" + bucketName + ".s3.amazonaws.com/";
+        return base64String(rawPolicy.getBytes("UTF-8")).replaceAll("\n", "").replaceAll("\r", "");
     }
 
     @SneakyThrows
     private String createSignature(String policy, String shortDate) {
         byte[] signingKey = getSignatureKey(secretKey, shortDate, region, "s3");
         byte[] rawSignature = hmacSHA256(policy, signingKey);
-        return Hex.encodeHexString(rawSignature);
+        return hexString(rawSignature);
     }
 
     private byte[] getSignatureKey(String key, String dateStamp, String regionName, String serviceName) throws Exception {
@@ -179,38 +113,15 @@ public class AmazonClient {
         return hmacSHA256("aws4_request", kService);
     }
 
-    private byte[] hmacSHA256(String data, byte[] key) throws Exception {
-        String algorithm="HmacSHA256";
-        Mac mac = Mac.getInstance(algorithm);
-        mac.init(new SecretKeySpec(key, algorithm));
-        return mac.doFinal(data.getBytes("UTF8"));
+    private String createServerUrl() {
+        return "http://" + bucketName + ".s3.amazonaws.com/";
     }
 
-    private void deleteFileFromS3Bucket(String fileName) {
-        s3client.deleteObject(new DeleteObjectRequest(bucketName + "/", fileName));
+    private String createShortDate(Date date) {
+        return getShortDateStringForDate(date);
     }
 
-    private void uploadFileToS3Bucket(String fileName, File file) {
-        s3client.putObject(
-                new PutObjectRequest(bucketName, fileName, file)
-                        .withCannedAcl(CannedAccessControlList.PublicRead)
-        );
-    }
-
-    @SneakyThrows
-    private File convertMultiPartToFile(MultipartFile file) {
-        File convFile = new File(file.getOriginalFilename());
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
-        fos.close();
-        return convFile;
-    }
-
-    public String getEndpointUrl() {
-        return endpointUrl;
-    }
-
-    public String getBucketName() {
-        return bucketName;
+    public String getBucketUrl() {
+        return endpointUrl + "/" + bucketName;
     }
 }

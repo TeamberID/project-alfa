@@ -44,7 +44,6 @@ public class RegistrationKeyRequestServiceImpl implements RegistrationKeyRequest
     @Override
     public void saveKeyRequest(RegistrationKeyRequestForm requestForm) {
         RegistrationKeyRequest registrationKeyRequest = getRegistrationKeyRequestByForm(requestForm);
-        fileStorageUtil.saveDocumentImageToStorage(requestForm.getDocumentImageMultipartFile(), registrationKeyRequest.getDocumentImage());
         keyRequestRepository.save(registrationKeyRequest);
     }
 
@@ -61,8 +60,7 @@ public class RegistrationKeyRequestServiceImpl implements RegistrationKeyRequest
                 .status(RegistrationKeyRequestStatus.UNDER_CONSIDERATION)
                 .date(System.currentTimeMillis())
                 .build();
-        FileInfo documentFileInfo = fileStorageUtil.getDocFileInfoByMultipart(requestForm.getDocumentImageMultipartFile());
-        Image documentImage = Image.builder().fileInfo(documentFileInfo).build();
+        Image documentImage = Image.builder().url(fileStorageUtil.getFileBucketUrl(requestForm.getDocumentStorageName())).build();
         registrationKeyRequest.setDocumentImage(documentImage);
         return registrationKeyRequest;
     }

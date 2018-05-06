@@ -109,7 +109,6 @@
     function uploadTeacher() {
         if (isDataValid()) {
             var teacherPhotoStorageName = generateTeacherPhotoStorageName();
-
             uploadTeacherDataToServer(teacherPhotoStorageName)
         }
     }
@@ -137,6 +136,7 @@
             processData: false,
             success: function () {
                 uploadTeacherPhotoToStorage(teacherPhotoStorageName);
+                resetForms();
             },
             error: function () {
                 console.log('uploadTeacherDataToServer method error')
@@ -145,11 +145,15 @@
     }
 
     function uploadTeacherPhotoToStorage(teacherPhotoStorageName) {
-        console.log("uploadTeacherPhotoToStorage");
         var keyInput = $('#key');
         var currentKeyValue = keyInput.val();
         keyInput.val(currentKeyValue + teacherPhotoStorageName);
         document.getElementById("teacher-photo-form").submit();
+    }
+
+    function resetForms() {
+        $('#teacher-data-form')[0].reset();
+        $('#teacher-photo-form')[0].reset();
     }
 
 </script>
