@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import ru.kpfu.itis.app.security.filters.TokenAuthFilter;
 
 import javax.sql.DataSource;
 
@@ -25,7 +27,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
     @Autowired
-    private AuthenticationProvider authenticationProvider;
+    @Qualifier("commonAuthenticationProvider")
+    private AuthenticationProvider commonAuthenticationProvider;
+
+    @Autowired
+    @Qualifier("tokenAuthenticationProvider")
+    private AuthenticationProvider tokenAuthenticationProvider;
+
+    @Autowired
+    private TokenAuthFilter tokenAuthFilter;
 
     @Qualifier("dataSource")
     @Autowired
@@ -33,7 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.addFilterBefore(tokenAuthFilter, BasicAuthenticationFilter.class).antMatcher("/**")
+                .authorizeRequests()
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/api/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/api/report/**").hasAuthority("USER")
@@ -66,7 +77,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
-        auth.authenticationProvider(authenticationProvider);
+        auth.authenticationProvider(tokenAuthenticationProvider);
+        auth.authenticationProvider(commonAuthenticationProvider);
     }
 
     @Bean

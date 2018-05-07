@@ -6,4 +6,6 @@ import ru.kpfu.itis.app.model.UserData;
 
 public interface AuthenticationService {
     UserData getUserByAuthentication(Authentication authentication);
+
+    String getAuthToken(Authentication authentication);
 }

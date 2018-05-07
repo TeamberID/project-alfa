@@ -18,7 +18,7 @@ import ru.kpfu.itis.app.repositories.UserDataRepository;
 import java.util.Collection;
 import java.util.Optional;
 
-@Component
+@Component("commonAuthenticationProvider")
 public class AuthProvider implements AuthenticationProvider {
 
     @Autowired
