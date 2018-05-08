@@ -1,0 +1,10 @@
+amazonProperties:
+  endpointUrl: https://s3.us-east-2.amazonaws.com
+  accessKey: AKIAINKNKZLFDY2GPS5Q
+  secretKey: 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
+  bucketName: p-alpha
+  expirationDate: 2019-12-30T12:00:00.000Z
+  acl: public-read
+  serverSideEncryption: AES256
+  amzAlgorithm: AWS4-HMAC-SHA256
+  region: us-east-2
