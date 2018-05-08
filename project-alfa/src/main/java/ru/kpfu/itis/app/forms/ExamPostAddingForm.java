@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 public class ExamPostAddingForm {
     private Long examId;
 
-    @Size(max=250)
+    @Size(max=2000)
     private String text;
 
     @Size(max=20)

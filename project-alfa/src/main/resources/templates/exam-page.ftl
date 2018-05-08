@@ -63,6 +63,18 @@
                     </tbody>
                 </table>
                 <a href="/user/manuals/${model.exam.id}">получить больше материалов</a>
+                <hr>
+                <h4>Тьюторы:</h4>
+                <#if model.tutors??>
+                <div style="margin-left: 3%">
+                <#list model.tutors as tutor>
+                    <div class="row">
+                        ${tutor.name}
+                        ${tutor.contacts}
+                    </div>
+                </#list>
+                </div>
+                </#if>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -141,15 +153,6 @@
         </div>
     </div>
 
-    <hr>
-
-    <h2>Тьюторы</h2>
-    <#list model.tutors as tutor>
-        <div class="row">
-            <h3>${tutor.name}</h3>
-        ${tutor.contacts}
-        </div>
-    </#list>
 
 </div>
 

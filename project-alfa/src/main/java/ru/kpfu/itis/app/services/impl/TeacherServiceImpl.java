@@ -56,7 +56,8 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<TeacherDto> getUserTeachersDto(Authentication authentication) {
         return sessionService.getUserExams(authentication).stream()
-                .map(exam -> TeacherDto.createOnTeacherAndSubject(exam.getTeacher(), exam.getSubject()))
+                .map(exam -> TeacherDto.createOnTeacher(exam.getTeacher()))
+                .distinct()
                 .collect(Collectors.toList());
     }
 
