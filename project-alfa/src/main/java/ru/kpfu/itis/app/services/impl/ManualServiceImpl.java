@@ -3,7 +3,6 @@ package ru.kpfu.itis.app.services.impl;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.app.forms.ManualAddingForm;
 import ru.kpfu.itis.app.model.Exam;
-import ru.kpfu.itis.app.model.FileInfo;
 import ru.kpfu.itis.app.model.Manual;
 import ru.kpfu.itis.app.repositories.ManualRepository;
 import ru.kpfu.itis.app.services.ExamService;
@@ -51,15 +50,13 @@ public class ManualServiceImpl implements ManualService {
     @Override
     public void saveManual(ManualAddingForm form) {
         Exam exam = examService.getExamById(form.getExamId());
-        FileInfo manualFileInfo = fileStorageUtil.getManualFileInfoByMultipart(form.getFile());
         Manual manual = Manual.builder()
                 .title(form.getTitle())
                 .author(form.getAuthor())
                 .exam(exam)
                 .subject(exam.getSubject())
-                .fileInfo(manualFileInfo)
+                .url(fileStorageUtil.getFileBucketUrl(form.getFileStorageName()))
                 .build();
-        fileStorageUtil.saveManualToStorage(form.getFile(), manual);
         manualRepository.save(manual);
     }
 

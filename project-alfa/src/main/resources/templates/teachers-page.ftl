@@ -40,7 +40,7 @@
                 <div class="col-md-4">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <img src="/file/${teacher.photo.fileInfo.id}" class="img-thumbnail img-responsive" alt="Your Teacher is Watching You!" width="200" height="300">
+                            <img src="${teacher.photo.url}" class="img-thumbnail img-responsive" alt="Your Teacher is Watching You!" width="200" height="300">
                             <h3 style="font-weight: bold">${teacher.name}</h3>
                             <a href="/user/teachers/${teacher.id}" class="btn btn-lg">
                                 <span class="glyphicon glyphicon-chevron-down"></span>

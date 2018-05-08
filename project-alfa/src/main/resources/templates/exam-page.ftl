@@ -40,7 +40,7 @@
             <div class="col-md-6">
                 <h4>принимать экзамен у вас будет:</h4>
                 <a href="/user/teachers/${model.exam.teacher.id}"><h3 style="font-weight: bold">${model.exam.teacher.name}</h3></a>
-                <img src="/file/${model.exam.teacher.photo.fileInfo.id}" class="img-thumbnail img-responsive" alt="Your Teacher is Watching You!" width="200" height="400">
+                <img src="${model.exam.teacher.photo.url}" class="img-thumbnail img-responsive" alt="Your Teacher is Watching You!" width="200" height="400">
             </div>
             <div class="col-md-6">
                 <h4>дидактические материалы:</h4>
@@ -57,7 +57,7 @@
                     <tr>
                         <td>${manual.title}</td>
                         <td>${manual.author}</td>
-                        <td><a href="/file/${manual.fileInfo.id}" class="btn btn-default" role="button" download><span class="glyphicon glyphicon-download"></span></a></td>
+                        <td><a href="${manual.url}" class="btn btn-default" role="button" download><span class="glyphicon glyphicon-download"></span></a></td>
                     </tr>
                     </#list>
                     </tbody>
@@ -85,16 +85,29 @@
     </#if>
     <div id="exam-form-block" class="post-form">
         <div id="exam-post-alert"></div>
-        <form method="post" enctype="multipart/form-data" id="exam-post-form">
+        <form id="exam-post-form">
             <div class="form-group">
                 <textarea id="exam-post-text" name="text" class="form-control" placeholder="отзыв об экзамене" rows="6" wrap="hard" cols="20" required></textarea>
             </div>
-            <div class="form-group">
-                <input id="files" type="file" multiple="multiple" name="files" accept="image/*"/>
-            </div>
-            <button class="btn btn-default" type="button" onclick="addNewExamPost(${model.exam.id})">оставить отзыв</button>
             <div class="clearfix"></div>
         </form>
+        <form id="post-file-form" action="${model.credentials.serverUrl}" method="post" enctype="multipart/form-data">
+            <input id="key" type="hidden" name="key" value="${model.credentials.key}" /><br />
+            <input type="hidden" name="acl" value="${model.credentials.acl}" />
+            <input type="hidden" name="Content-Type" value="${model.credentials.contentType}" /><br />
+            <input type="hidden" name="x-amz-server-side-encryption" value="${model.credentials.serverSideEncryption}" />
+            <input type="hidden" name="X-Amz-Credential" value="${model.credentials.amzCredential}" />
+            <input type="hidden" name="X-Amz-Algorithm" value="${model.credentials.amzAlgorithm}" />
+            <input type="hidden" name="X-Amz-Date" value="${model.credentials.amzDate}" />
+
+            <input type="hidden" name="Policy" value="${model.credentials.policy}" />
+            <input type="hidden" name="X-Amz-Signature" value="${model.credentials.signature}" />
+
+            <div class="form-group">
+                <input id="files" type="file" multiple="multiple" accept="image/*"/>
+            </div>
+        </form>
+        <button class="btn btn-default" type="button" onclick="addNewExamPost(${model.exam.id})">оставить отзыв</button>
     </div>
     <hr>
     <div id="exam-bottom-block">
@@ -181,9 +194,8 @@
     }
 
     function uploadExamPostByAjax(examId) {
-        var form = $("#exam-post-form")[0];
-        var data = new FormData(form);
-        data.append("examId", examId);
+        var fileStorageNames = generateFileStorageNames();
+        var data = createPostDataForm(fileStorageNames, examId);
 
         $.ajax({
             url: '/api/exam-post',
@@ -195,6 +207,7 @@
             contentType: false,
             processData: false,
             success: function (data) {
+                uploadFilesToStorage(fileStorageNames);
                 successUpload(data);
             },
             error: function () {
@@ -202,6 +215,68 @@
                 console.log('uploadExamPostByAjax method error')
             }
         })
+    }
+
+    function createPostDataForm(fileStorageNames, examId) {
+        var form = $("#exam-post-form")[0];
+        var data = new FormData(form);
+        for (var i = 0; i < fileStorageNames.length; i++) {
+            data.append("fileStorageNames", fileStorageNames[i]);
+        }
+        data.append("examId", examId);
+        return data;
+    }
+
+    function generateFileStorageNames() {
+        var files = $("#files")[0].files;
+        var fileNames = [];
+        for (var i = 0; i < files.length; i++) {
+            fileNames[i] = generateFileName(files[i].name, i);
+        }
+        return fileNames;
+    }
+
+    function generateFileName(fileName, salt) {
+        var extension = fileName.split('.').pop();
+        return Date.now() + salt + '.' + extension;
+    }
+
+    function uploadFilesToStorage(fileNames) {
+        var url = $("#post-file-form").attr('action');
+        var files = $("#files")[0].files;
+        var isSuccess = true;
+        for (var i = 0; i < files.length && isSuccess; i++) {
+            var key = fileNames[i];
+            var file = files[i];
+
+            changeKeyValue(key);
+            var data = createFilePostData(file);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                enctype: 'multipart/form-data',
+                data: data,
+                dataType: 'xml',
+                contentType: false,
+                processData: false,
+                error: function () {
+                    isSuccess = false;
+                    console.log('uploadFilesToStorage method error')
+                }
+            })
+        }
+    }
+
+    function changeKeyValue(key) {
+        $('#key').val(key);
+    }
+
+    function createFilePostData(file) {
+        var form = $("#post-file-form")[0];
+        var data = new FormData(form);
+        data.append("file", file);
+        return data;
     }
 
     function successUpload(data) {
@@ -217,37 +292,37 @@
             var post = posts[i];
             $('#exam-post-list').append(
                     '<div class="panel panel-default">' +
-                    '<div class="panel-heading">' +
-                    '<div class="pull-left">' +
-                    '<p>' + post.author.name + '</p>' +
-                    '</div>' +
-                    '<div class="pull-right">' +
-                    '<p>' + post.date + '</p>' +
-                    '</div>' +
-                    '<div class="clearfix"></div>' +
-                    '</div>' +
-                    '<div class="panel-body">' +
-                    '<div class="row">' +
-                    '<div class="col-md-10">' +
-                    '<p>' + post.text + '</p>' +
-                    '</div>' +
-                    '<div class="col-md-2">' +
-                    '<a href="/user/session/exam-post/' + post.id + '" class="btn btn-lg">' +
-                    '<span class="glyphicon glyphicon-chevron-right"></span>' +
-                    '</a>' +
-                    '</div>' +
-                    '<div class="clearfix"></div>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="panel-footer">' +
-                    '<div class="pull-left">' +
-                    '<p>прикрепленные файлы: ' + post.attachments.length + '</p>' +
-                    '</div>' +
-                    '<div class="pull-right">' +
-                    '<p>количество комментариев: ' + post.comments.length + '</p>' +
-                    '</div>' +
-                    '<div class="clearfix"></div>' +
-                    '</div>' +
+                        '<div class="panel-heading">' +
+                            '<div class="pull-left">' +
+                                '<p>' + post.author.name + '</p>' +
+                            '</div>' +
+                            '<div class="pull-right">' +
+                                '<p>' + post.date + '</p>' +
+                            '</div>' +
+                            '<div class="clearfix"></div>' +
+                        '</div>' +
+                        '<div class="panel-body">' +
+                            '<div class="row">' +
+                                '<div class="col-md-10">' +
+                                    '<p>' + post.text + '</p>' +
+                                '</div>' +
+                                '<div class="col-md-2">' +
+                                    '<a href="/user/session/exam-post/' + post.id + '" class="btn btn-lg">' +
+                                        '<span class="glyphicon glyphicon-chevron-right"></span>' +
+                                    '</a>' +
+                                '</div>' +
+                                '<div class="clearfix"></div>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="panel-footer">' +
+                            '<div class="pull-left">' +
+                                '<p>прикрепленные файлы: ' + post.attachments.length + '</p>' +
+                            '</div>' +
+                            '<div class="pull-right">' +
+                                '<p>количество комментариев: ' + post.comments.length + '</p>' +
+                            '</div>' +
+                            '<div class="clearfix"></div>' +
+                        '</div>' +
                     '</div>'
             );
         }

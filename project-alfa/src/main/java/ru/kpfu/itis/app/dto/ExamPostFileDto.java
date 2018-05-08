@@ -2,7 +2,6 @@ package ru.kpfu.itis.app.dto;
 
 import lombok.*;
 import ru.kpfu.itis.app.model.ExamPostFile;
-import ru.kpfu.itis.app.model.FileInfo;
 
 /**
  * Created by Melnikov Semen
@@ -18,13 +17,13 @@ import ru.kpfu.itis.app.model.FileInfo;
 public class ExamPostFileDto {
     private Long id;
 
-    private FileInfo fileInfo;
+    private String url;
 
     private Long examPostId;
 
     private ExamPostFileDto(ExamPostFile examPostFile) {
         id = examPostFile.getId();
-        fileInfo = examPostFile.getFileInfo();
+        url = examPostFile.getUrl();
         examPostId = examPostFile.getExamPost().getId();
     }
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kpfu.itis.app.model.Exam;
 import ru.kpfu.itis.app.services.*;
+import ru.kpfu.itis.app.utils.AmazonClient;
 
 import java.util.List;
 
@@ -27,13 +28,15 @@ public class UserSessionController {
     private ExamPostService examPostService;
     private ManualService manualService;
     private TutorService tutorService;
+    private AmazonClient amazonClient;
 
-    public UserSessionController(TutorService tutorService,SessionService sessionService, ExamService examService, ExamPostService examPostService, ManualService manualService) {
+    public UserSessionController(TutorService tutorService, SessionService sessionService, ExamService examService, ExamPostService examPostService, ManualService manualService, AmazonClient amazonClient) {
         this.sessionService = sessionService;
         this.examService = examService;
         this.examPostService = examPostService;
         this.manualService = manualService;
         this.tutorService = tutorService;
+        this.amazonClient = amazonClient;
     }
 
     @GetMapping("")
@@ -47,8 +50,9 @@ public class UserSessionController {
     public String getExamPage(@ModelAttribute("model") ModelMap model, @PathVariable("id") Long examId) {
         Exam exam = examService.getExamById(examId);
         model.addAttribute("exam", exam);
-      model.addAttribute("tutors",tutorService.getTutorsBySubject(exam.getSubject()));
+        model.addAttribute("tutors",tutorService.getTutorsBySubject(exam.getSubject()));
         model.addAttribute("manuals", manualService.getUserManualsByExamIdAndCount(examId, 5));
+        model.addAttribute("credentials", amazonClient.getCredentials());
         return "exam-page";
     }
 

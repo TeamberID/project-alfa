@@ -2,16 +2,13 @@ package ru.kpfu.itis.app.controllers.admin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ru.kpfu.itis.app.forms.ManualAddingForm;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kpfu.itis.app.services.ExamService;
 import ru.kpfu.itis.app.services.ManualService;
-import ru.kpfu.itis.app.validators.ManualAddingFromValidator;
-
-import javax.validation.Valid;
+import ru.kpfu.itis.app.utils.AmazonClient;
 
 /**
  * Created by Melnikov Semen
@@ -24,17 +21,12 @@ public class AdminManualController {
 
     private ManualService manualService;
     private ExamService examService;
-    private ManualAddingFromValidator manualAddingFromValidator;
+    private AmazonClient amazonClient;
 
-    public AdminManualController(ManualService manualService, ExamService examService, ManualAddingFromValidator manualAddingFromValidator) {
+    public AdminManualController(ManualService manualService, ExamService examService, AmazonClient amazonClient) {
         this.manualService = manualService;
         this.examService = examService;
-        this.manualAddingFromValidator = manualAddingFromValidator;
-    }
-
-    @InitBinder("manualAddingForm")
-    public void initManualAddingFromValidator(WebDataBinder binder) {
-        binder.addValidators(manualAddingFromValidator);
+        this.amazonClient = amazonClient;
     }
 
     @GetMapping("")
@@ -46,18 +38,8 @@ public class AdminManualController {
     @GetMapping("/add")
     public String manualsAddingPage(@ModelAttribute("model")ModelMap model) {
         model.addAttribute("exams", examService.getAll());
+        model.addAttribute("credentials", amazonClient.getCredentials());
         return "admin/entities/manuals-add";
-    }
-
-    @PostMapping("/add")
-    public String saveManual(@Valid @ModelAttribute("manualAddingForm") ManualAddingForm form,
-                             BindingResult errors, RedirectAttributes attributes) {
-        if (errors.hasErrors()) {
-            attributes.addFlashAttribute("error", errors.getAllErrors().get(0).getDefaultMessage());
-            return "redirect:/admin/manuals/add";
-        }
-        manualService.saveManual(form);
-        return "redirect:/admin/manuals/add";
     }
 
     @GetMapping("/{id}/delete")

@@ -28,7 +28,7 @@ public class Teacher {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
     private List<TeacherComment> comments;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "photo_id")
     private TeacherPhoto photo;
 

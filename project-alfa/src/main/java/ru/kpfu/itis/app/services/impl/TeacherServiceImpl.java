@@ -77,9 +77,9 @@ public class TeacherServiceImpl implements TeacherService {
                 .map(subjectRepository::findOne)
                 .collect(Collectors.toList());
 
-        FileInfo photoFileInfo = fileStorageUtil.getTeacherPhotoByMultipart(teacherAddingForm.getPhoto());
-        TeacherPhoto teacherPhoto = TeacherPhoto.builder().fileInfo(photoFileInfo).build();
-        fileStorageUtil.saveTeacherPhotoToStorage(teacherAddingForm.getPhoto(), teacherPhoto);
+        TeacherPhoto teacherPhoto = TeacherPhoto.builder()
+                .url(fileStorageUtil.getFileBucketUrl(teacherAddingForm.getTeacherPhotoStorageName()))
+                .build();
 
         TeacherScore teacherScore = prepareStartedTeacherScore();
 

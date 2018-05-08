@@ -1,8 +1,9 @@
 package ru.kpfu.itis.app.forms;
 
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -16,7 +17,10 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class TeacherAddingForm {
+    @NotEmpty
     private String name;
-    private MultipartFile photo;
+    @NotEmpty
+    private String teacherPhotoStorageName;
+    @NotNull
     private List<Long> subjectsId;
 }

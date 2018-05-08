@@ -36,40 +36,41 @@
             <#if error??>
                 <div class="alert alert-danger">${error}</div>
             </#if>
-            <form method="post" action="/registration-key-request" enctype="multipart/form-data" class="">
+            <div id="key-alert"></div>
+            <form id="key-data-form">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input class="form-control" name="name" placeholder="имя" type="text" required>
+                            <input id="name" class="form-control" name="name" placeholder="имя" type="text" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input class="form-control" name="countOfKey" placeholder="количество ключей" type="number" required>
+                            <input id="countOfKey" class="form-control" name="countOfKey" placeholder="количество ключей" type="number" required>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input class="form-control" name="surname" placeholder="фамилия" type="text" required>
+                            <input id="surname" class="form-control" name="surname" placeholder="фамилия" type="text" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input class="form-control" name="course" placeholder="курс" type="text" required>
+                            <input id="course" class="form-control" name="course" placeholder="курс" type="text" required>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input class="form-control" name="email" placeholder="email" type="email" required>
+                            <input id="email" class="form-control" name="email" placeholder="email" type="email" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input class="form-control" name="group" placeholder="номер группы" type="text" required>
+                            <input id="group" class="form-control" name="group" placeholder="номер группы" type="text" required>
                         </div>
                     </div>
                 </div>
@@ -92,28 +93,113 @@
                         </div>
                     </div>
                 </div>
+                <input id="document-storage-name" type="hidden" name="documentStorageName" value="">
+            </form>
+            <form id="key-file-form" action="${model.credentials.serverUrl}" method="post" enctype="multipart/form-data">
+                <input id="key" type="hidden" name="key" value="${model.credentials.key}" /><br />
+                <input type="hidden" name="acl" value="${model.credentials.acl}" />
+                <input type="hidden" name="Content-Type" value="${model.credentials.contentType}" /><br />
+                <input type="hidden" name="x-amz-server-side-encryption" value="${model.credentials.serverSideEncryption}" />
+                <input type="hidden" name="X-Amz-Credential" value="${model.credentials.amzCredential}" />
+                <input type="hidden" name="X-Amz-Algorithm" value="${model.credentials.amzAlgorithm}" />
+                <input type="hidden" name="X-Amz-Date" value="${model.credentials.amzDate}" />
+
+                <input type="hidden" name="Policy" value="${model.credentials.policy}" />
+                <input type="hidden" name="X-Amz-Signature" value="${model.credentials.signature}" />
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="file">фото студенческого билета</label>
-                            <input id="file" name="documentImageMultipartFile" type="file" accept="image/*" required/>
-                            <img name="image" id="image" src="/images/temp-pic.jpg" alt="Stud Image" width="600" height="250">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <button class="btn btn-default btn-block" type="submit">отправить запрос</button>
+                            <input id="file" name="file" type="file" accept="image/*" required/>
+                            <img id="image" src="/images/temp-pic.jpg" alt="Stud Image" width="650" height="300">
                         </div>
                     </div>
                 </div>
             </form>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button class="btn btn-default btn-block" type="button" onclick="uploadRegistrationKeyRequest()">отправить запрос</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script>
 
         document.getElementById('file').addEventListener('change', handleFileSelect, false);
+
+        function uploadRegistrationKeyRequest() {
+            if (isDataValid()) {
+                var documentStorageName = generateDocumentStorageName();
+                uploadDocumentDataToServer(documentStorageName)
+            } else {
+                createMessage("Проверьте заполненность полей и попробуйте снова.", "danger");
+            }
+        }
+
+        function isDataValid() {
+            return $('#name').val().length > 0 && $('#countOfKey').val().length > 0 &&
+                    $('#surname').val().length > 0 && $('#group').val().length > 0 &&
+                    $('#course').val().length > 0 && $('#email').val().length > 0;
+        }
+
+        function generateDocumentStorageName() {
+            var fileName = document.getElementById("file").value;
+            var extension = fileName.split('.').pop();
+            return Date.now() + '.' + extension;
+        }
+
+        function uploadDocumentDataToServer(documentStorageName) {
+            $('#document-storage-name').val(documentStorageName);
+            var form = $('#key-data-form')[0];
+            var data = new FormData(form);
+            $.ajax({
+                url: '/registration-key-request', //todo
+                type: 'POST',
+                enctype: 'multipart/form-data',
+                data: data,
+                contentType: false,
+                processData: false,
+                success: function () {
+                    uploadDocumentToStorage(documentStorageName);
+                    resetForms();
+                    createMessage("Запрос успешно отправлен! Еще ключей? :)", "success");
+                },
+                error: function () {
+                    createMessage("При загрузке файла произошла ошибка. Проверьте заполненность полей и попробуйте снова.", "danger");
+                    console.log('uploadManualDataToServer method error')
+                }
+            })
+        }
+
+        function uploadDocumentToStorage(documentStorageName) {
+            var keyInput = $('#key');
+            var currentKeyValue = keyInput.val();
+            keyInput.val(currentKeyValue + documentStorageName);
+            document.getElementById("key-file-form").submit();
+        }
+
+        function resetForms() {
+            $('#key-data-form')[0].reset();
+            $('#key-file-form')[0].reset();
+            $("#image").attr("src","/images/temp-pic.jpg");
+        }
+
+        function createMessage(message, type) {
+            clearMessage();
+            $("#key-alert").append(
+                    '<div class="alert alert-' + type + ' alert-dismissible">' +
+                    '<a class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+                    '<p>' + message + '</p>' +
+                    '</div>'
+            );
+        }
+
+        function clearMessage() {
+            $("#key-alert").html("");
+        }
 
         function updateInstituteSelect(instituteId) {
             clearInstituteSelect();

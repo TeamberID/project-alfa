@@ -48,7 +48,7 @@
                 <tr>
                     <td>${manual.title}</td>
                     <td>${manual.author}</td>
-                    <td><a href="/file/${manual.fileInfo.id}" class="btn btn-default" role="button" download><span class="glyphicon glyphicon-download"></span></a></td>
+                    <td><a href="${manual.url}" class="btn btn-default" role="button" download><span class="glyphicon glyphicon-download"></span></a></td>
                 </tr>
                 </#list>
         </tbody>
