@@ -44,6 +44,7 @@
         <th>User Status</th>
         <th>Institute</th>
         <th>Course</th>
+        <th>Role</th>
         <th></th>
         <th></th>
     </tr>
@@ -56,6 +57,7 @@
         <td>${user.userStatus}</td>
         <td>${user.user.university.name} ${user.user.institute.name}</td>
         <td>${user.user.course}</td>
+        <td>${user.role}</td>
         <td>
             <form method="get" action="/admin/users/${user.id}">
             <button class = "option">edit</button>

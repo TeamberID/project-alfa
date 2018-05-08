@@ -1,5 +1,6 @@
 package ru.kpfu.itis.app.services;
 
+import ru.kpfu.itis.app.forms.TutorAddingForm;
 import ru.kpfu.itis.app.model.Subject;
 import ru.kpfu.itis.app.model.Tutor;
 
@@ -13,6 +14,8 @@ public interface TutorService {
     void delete(Long id);
 
     List<Tutor> getAll();
+
+    void add(TutorAddingForm tutorAddingForm);
 
     List<Tutor> getTutorsBySubject(Subject subject);
 

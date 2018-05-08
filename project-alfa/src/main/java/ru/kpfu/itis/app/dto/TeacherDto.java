@@ -29,17 +29,14 @@ public class TeacherDto {
 
     private TeacherPhoto photo;
 
-    private String subjectName;
-
-    private TeacherDto(Teacher teacher, Subject subject) {
+    private TeacherDto(Teacher teacher) {
         id = teacher.getId();
         name = teacher.getName();
         comments = teacher.getComments();
         photo = teacher.getPhoto();
-        subjectName = subject.getName();
     }
 
-    public static TeacherDto createOnTeacherAndSubject(Teacher teacher, Subject subject) {
-        return new TeacherDto(teacher, subject);
+    public static TeacherDto createOnTeacher(Teacher teacher) {
+        return new TeacherDto(teacher);
     }
 }
