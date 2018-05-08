@@ -33,48 +33,21 @@
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <a href="/admin/users" class="btn btn-default" role="button">Пользователи</a>
+                    <a href="/admin/users/" class="btn btn-default" role="button">Пользователи</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <a href="/admin/universities" class="btn btn-default" role="button">Университеты</a>
+                    <a href="/admin/universities/" class="btn btn-default" role="button">Университеты</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <a href="/admin/institutes" class="btn btn-default" role="button">Институты</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <hr>
-</div>
-
-<div class="container" style="padding-top: 60px">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <a href="/admin/teachers" class="btn btn-default" role="button">Учителя</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <a href="/admin/sessions" class="btn btn-default" role="button">Сессии</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <a href="/admin/subjects" class="btn btn-default" role="button">Предметы</a>
+                    <a href="/admin/institutes/" class="btn btn-default" role="button">Институты</a>
                 </div>
             </div>
         </div>
@@ -87,20 +60,48 @@
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <a href="/admin/manuals" class="btn btn-default" role="button">Материалы</a>
+                    <a href="/admin/teachers/" class="btn btn-default" role="button">Учителя</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <a href="/admin/tutors" class="btn btn-default" role="button">Тьюторы</a>
+                    <a href="/admin/sessions/" class="btn btn-default" role="button">Сессии</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-body">
+                    <a href="/admin/subjects/" class="btn btn-default" role="button">Предметы</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>
+
+<div class="container" style="padding-top: 60px">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="/admin/tutors/" class="btn btn-default" role="button">Тьюторы</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="/admin/manuals/" class="btn btn-default" role="button">Материалы</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="/admin/registration-key-requests" class="btn btn-default" role="button">Запросы ключей</a>
                 </div>
             </div>
         </div>

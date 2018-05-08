@@ -150,9 +150,7 @@
     }
 
     function uploadTeacherPhotoToStorage(teacherPhotoStorageName) {
-        var keyInput = $('#key');
-        var currentKeyValue = keyInput.val();
-        keyInput.val(currentKeyValue + teacherPhotoStorageName);
+        $('#key').val(teacherPhotoStorageName);
         document.getElementById("teacher-photo-form").submit();
     }
 

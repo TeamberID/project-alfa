@@ -36,6 +36,7 @@ public class UserDatasServiceImpl implements UserDatasService {
         userDatasRepository.save(UserData.builder()
                 .id(Long.parseLong(userEditForm.getId()))
                 .login(userEditForm.getLogin())
+                .hashPassword(userEditForm.getHashPassword())
                 .role(Role.valueOf(userEditForm.getRole()))
                 .userStatus(UserStatus.valueOf(userEditForm.getUserStatus()))
                 .user(User.builder()

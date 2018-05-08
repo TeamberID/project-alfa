@@ -175,9 +175,7 @@
         }
 
         function uploadDocumentToStorage(documentStorageName) {
-            var keyInput = $('#key');
-            var currentKeyValue = keyInput.val();
-            keyInput.val(currentKeyValue + documentStorageName);
+            $('#key').val(documentStorageName);
             document.getElementById("key-file-form").submit();
         }
 

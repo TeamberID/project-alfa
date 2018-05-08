@@ -83,6 +83,7 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" name="hashPassword" value="${model.user.hashPassword}" />
             </div>
 
             <div class="row">
