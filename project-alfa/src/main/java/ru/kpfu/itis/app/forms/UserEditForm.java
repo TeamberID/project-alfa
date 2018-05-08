@@ -16,6 +16,7 @@ public class UserEditForm {
     private String id;
     private String user_id;
     private String login;
+    private String hashPassword;
     private String name;
     private String role;
     private String userStatus;

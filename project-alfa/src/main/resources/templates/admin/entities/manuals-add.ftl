@@ -145,9 +145,7 @@
     }
 
     function uploadManualToStorage(manualStorageName) {
-        var keyInput = $('#key');
-        var currentKeyValue = keyInput.val();
-        keyInput.val(currentKeyValue + manualStorageName);
+        $('#key').val(manualStorageName);
         document.getElementById("manual-file-form").submit();
     }
 
