@@ -43,6 +43,7 @@ public class ExamPostCommentServiceImpl implements ExamPostCommentService {
                 .text(form.getText())
                 .examPost(examPost)
                 .author(user)
+                .reports(0)
                 .date(Date.valueOf(LocalDate.now()))
                 .build();
         examPostCommentRepository.save(examPostComment);

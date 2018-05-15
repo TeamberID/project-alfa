@@ -51,6 +51,7 @@ public class ExamPostServiceImpl implements ExamPostService {
                 .author(user)
                 .text(form.getText())
                 .exam(exam)
+                .reports(0)
                 .comments(Collections.emptyList())
                 .build();
         List<ExamPostFile> attachments = createExamPostAttachments(form.getFileStorageNames(), examPost);

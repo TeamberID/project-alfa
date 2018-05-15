@@ -210,6 +210,11 @@
                                 '<div class="clearfix"></div>' +
                             '</div>' +
                         '</div>' +
+                    '</div>' +
+                    '<div>' +
+                        '<button onclick="sendReport(' + comment.id + ')">' +
+                            'report' +
+                        '</button>' +
                     '</div>'
             );
         }
