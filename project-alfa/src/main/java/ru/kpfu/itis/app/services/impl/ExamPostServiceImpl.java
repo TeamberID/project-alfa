@@ -3,7 +3,6 @@ package ru.kpfu.itis.app.services.impl;
 import com.google.common.collect.Lists;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import ru.kpfu.itis.app.controllers.rest.ReportController;
 import ru.kpfu.itis.app.dto.ExamPostDto;
 import ru.kpfu.itis.app.forms.ExamPostAddingForm;
 import ru.kpfu.itis.app.model.Exam;
@@ -15,6 +14,7 @@ import ru.kpfu.itis.app.repositories.ExamPostsRepository;
 import ru.kpfu.itis.app.repositories.ExamsRepository;
 import ru.kpfu.itis.app.services.AuthenticationService;
 import ru.kpfu.itis.app.services.ExamPostService;
+import ru.kpfu.itis.app.services.ReportService;
 import ru.kpfu.itis.app.utils.FileStorageUtil;
 
 import java.sql.Date;
@@ -95,15 +95,15 @@ public class ExamPostServiceImpl implements ExamPostService {
     @Override
     public void incReportsNumber(Long id) {
         ExamPost examPost = examPostRepository.findOne(id);
-        examPost.setReports(examPost.getReports()+1);
-        if (examPost.getReports() >= ReportController.NUMBER_OF_REPORTS_TO_DELETE){
+        examPost.setReports(examPost.getReports() + 1);
+        if (examPost.getReports() >= ReportService.NUMBER_OF_REPORTS_TO_DELETE){
             delete(examPost.getId());
         }
         examPostRepository.save(examPost);
     }
 
     private void delete(Long id) {
-       ExamPost examPost =  examPostRepository.findOne(id);
+       ExamPost examPost = examPostRepository.findOne(id);
        examPost.setState(PostStatus.DELETED);
        examPostRepository.save(examPost);
     }

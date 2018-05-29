@@ -52,10 +52,14 @@
                 <div class="clearfix"></div>
             </div>
         </div>
-        <div>
-            <button onclick="sendReportOnPost(${model.post.id})">
-                report
-            </button>
+        <div class="panel-footer">
+            <div class="col-md-10"></div>
+            <div class="col-md-2">
+                <button class="btn btn-default" type="button" onclick="sendReportOnPost(${model.post.id})">
+                    жалоба
+                </button>
+            </div>
+            <div class="clearfix"></div>
         </div>
     </div>
     <div class="row">
@@ -103,13 +107,16 @@
                                 <div class="clearfix"></div>
                             </div>
                         </div>
+                        <div class="panel-footer">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4">
+                                <button class="btn btn-default" type="button" onclick="sendReport(${comment.id})">
+                                    жалоба
+                                </button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
                     </div>
-                    <div>
-                        <button onclick="sendReport(${comment.id})">
-                            report
-                        </button>
-                    </div>
-
                 </#list>
             </div>
             <div id="post-form-alert"></div>
@@ -210,11 +217,15 @@
                                 '<div class="clearfix"></div>' +
                             '</div>' +
                         '</div>' +
-                    '</div>' +
-                    '<div>' +
-                        '<button onclick="sendReport(' + comment.id + ')">' +
-                            'report' +
-                        '</button>' +
+                        '<div class="panel-footer">' +
+                            '<div class="col-md-8"></div>' +
+                            '<div class="col-md-4">' +
+                                '<button class="btn btn-default" type="button" onclick="sendReport(' + comment.id + ')">' +
+                                    'жалоба' +
+                                '</button>' +
+                            '</div>' +
+                            '<div class="clearfix"></div>' +
+                        '</div>' +
                     '</div>'
             );
         }

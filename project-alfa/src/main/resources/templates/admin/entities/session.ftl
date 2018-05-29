@@ -3,7 +3,7 @@
     <link href="/bootstrap/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/css/session-page.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body class="container">
 <style>
     /* внешние границы таблицы серого цвета толщиной 1px */
     table {border: 1px solid grey;}

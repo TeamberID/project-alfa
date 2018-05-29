@@ -1,7 +1,7 @@
 amazonProperties:
   endpointUrl: https://s3.us-east-2.amazonaws.com
-  accessKey: AKIAINKNKZLFDY2GPS5Q
-  secretKey: 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
+  accessKey: AKIAIUTHVMI6HCUMY7GA
+  secretKey: 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
   bucketName: p-alpha
   expirationDate: 2019-12-30T12:00:00.000Z
   acl: public-read
