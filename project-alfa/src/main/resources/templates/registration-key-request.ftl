@@ -166,6 +166,7 @@
                     uploadDocumentToStorage(documentStorageName);
                     resetForms();
                     createMessage("Запрос успешно отправлен! Еще ключей? :)", "success");
+                    window.location.replace("http://p-alpha.website/registration-key-request-success");
                 },
                 error: function () {
                     createMessage("При загрузке файла произошла ошибка. Проверьте заполненность полей и попробуйте снова.", "danger");

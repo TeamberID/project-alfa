@@ -51,4 +51,9 @@ public class RegistrationKeyRequestController {
     public void submitKeyRequest(@Valid @ModelAttribute("keyRequestForm")RegistrationKeyRequestForm keyRequestForm) {
         registrationKeyRequestService.saveKeyRequest(keyRequestForm);
     }
+
+    @GetMapping("/registration-key-request-success")
+    public String successKeyRequest(){
+        return "registration-key-request-success";
+    }
 }
